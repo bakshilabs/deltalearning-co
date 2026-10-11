@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delta Learning | White-label AI learning experiences for children</title>
+<meta name="description" content="Create safe, branded AI-learning games and experiences for the children your organisation already serves. License, customise or co-create with Delta Learning.">
+<link rel="canonical" href="https://deltalearning.co/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Delta Learning">
+<meta property="og:url" content="https://deltalearning.co/">
+<meta property="og:title" content="AI learning experiences, built for your brand · Delta Learning">
+<meta property="og:description" content="Safe, branded AI-learning games for the children your organisation already serves. License, customise or co-create with Delta Learning.">
+<meta property="og:image" content="https://deltalearning.co/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Delta Learning: AI learning experiences, built for your brand.">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FBF8F1">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/touch-icon.png">
+<link rel="preload" href="assets/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="modulepreload" href="js/vendor/three.module.min.js">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/game.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Delta Learning","url":"https://deltalearning.co/","logo":"https://deltalearning.co/assets/logo-learning.svg","description":"White-label AI learning experiences for organisations that work with children."}
+</script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.2 7.5 9.5 4.4-1.3 7.5-4.9 7.5-9.5V6z"/><path d="m8.8 12 2.2 2.2 4.4-4.6"/></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4.5" y="5" width="15" height="10" rx="1.5"/><path d="M2.5 18.5h19"/></symbol>
+    <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.6 3.4-5.6 7-5.6s6.2 2 7 5.6"/></symbol>
+    <symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M9 4.5h3.5a1.8 1.8 0 1 1 3.5 0H19.5V9a1.8 1.8 0 1 0 0 3.5v6.5H4.5v-6.5a1.8 1.8 0 1 0 0-3.5V4.5z"/></symbol>
+    <symbol id="i-steps" viewBox="0 0 24 24"><path d="M4 19h5v-5h5V9h6"/><path d="m17 6 3 3-3 3"/></symbol>
+    <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 14c.9 1.4 2.1 2.1 3.5 2.1s2.6-.7 3.5-2.1"/><path d="M9 9.6h.01M15 9.6h.01"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3 5.5 13.5H12L11 21l7.5-10.5H12z"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="14" r="4"/><path d="m11 11 8-8M16 6l2.5 2.5M14 8l2 2"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M4.5 5.5h15v10h-8l-4 3.5v-3.5h-3z"/><path d="M8 9.5h8M8 12.5h5"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/><path d="m7.8 10.6 1.9 1.9 3.4-3.6"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9.5 3.5h5M10.5 3.5v6L5 19a1.3 1.3 0 0 0 1.1 2h11.8A1.3 1.3 0 0 0 19 19l-5.5-9.5v-6"/><path d="M7.5 15h9"/></symbol>
+    <symbol id="i-arrows" viewBox="0 0 24 24"><path d="M4 8h13M13.5 4.5 17 8l-3.5 3.5"/><path d="M20 16H7M10.5 12.5 7 16l3.5 3.5"/></symbol>
+    <symbol id="i-decide" viewBox="0 0 24 24"><path d="M12 21v-7M12 14 6 7.5M12 14l6-6.5"/><path d="M3.5 7.5h5V3M20.5 7.5h-5V3"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5.5 21V4M5.5 4.5h12l-2.5 4 2.5 4h-12"/></symbol>
+    <symbol id="i-brush" viewBox="0 0 24 24"><path d="M20 4 10.5 13.5"/><path d="M9.8 14.2c-2.5-.6-4.6 1-4.8 3.2-.1 1.4-.9 2.3-2 2.6 2.6 1.5 7.4.9 7.9-2.6"/></symbol>
+    <symbol id="i-game" viewBox="0 0 24 24"><path d="M7 7.5h10a4.5 4.5 0 0 1 4.4 5.5l-.8 3.6a2.4 2.4 0 0 1-4.1 1.1L14.4 15.5H9.6l-2.1 2.2a2.4 2.4 0 0 1-4.1-1.1L2.6 13A4.5 4.5 0 0 1 7 7.5z"/><path d="M7.5 10.5v3M6 12h3M15.5 11.5h.01M17.5 13h.01"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10 5 7.5 4.5 4 4.5v13c3.5 0 6 .5 8 2 2-1.5 4.5-2 8-2v-13c-3.5 0-6 .5-8 2zM12 6.5v13"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24"><rect x="5" y="4.5" width="14" height="16" rx="1.8"/><path d="M9 4.5V3h6v1.5M8.5 10h7M8.5 13.5h7M8.5 17h4"/></symbol>
+    <symbol id="i-cap" viewBox="0 0 24 24"><path d="m12 5 9.5 4.5L12 14 2.5 9.5z"/><path d="M6.5 11.5V16c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.5M21.5 9.5V15"/></symbol>
+    <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v4M15 3v4M6.5 7h11v3.5a5.5 5.5 0 0 1-11 0zM12 16v5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></symbol>
+    <symbol id="i-loop" viewBox="0 0 24 24"><path d="M19.5 12A7.5 7.5 0 1 1 16 5.6"/><path d="M16.5 2v4h-4"/></symbol>
+    <symbol id="i-network" viewBox="0 0 24 24"><circle cx="12" cy="5.5" r="2.5"/><circle cx="5" cy="18.5" r="2.5"/><circle cx="19" cy="18.5" r="2.5"/><path d="M11 7.8 6.2 16.3M13 7.8l4.8 8.5M7.5 18.5h9"/></symbol>
+    <symbol id="i-chat-off" viewBox="0 0 24 24"><path d="M4.5 5.5h15v10h-8l-4 3.5v-3.5h-3z"/><path d="m3 3 18 18"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 2.8 20.2 7.4v9.2L12 21.2l-8.2-4.6V7.4z"/><path d="M3.8 7.4 12 12l8.2-4.6M12 12v9.2"/></symbol>
+    <symbol id="i-vote" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="2"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="2"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="2"/><path d="m14.6 16.8 1.8 1.8 3.2-3.4"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.2l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.6l-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z"/></symbol>
+    <symbol id="i-collect" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2.5"/><path d="M3.5 10h17M10 4v16"/><circle cx="15" cy="15" r="1.6"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="M4 6.5h8.5l1 1.2H20v4.6H13.5l-1 1.2H4z"/><path d="M4 16h7l.8 1h5.2v2.5H4z"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="12" rx="4"/><path d="M12 7V3.8"/><circle cx="12" cy="3.2" r=".8"/><circle cx="9" cy="13" r="1.2"/><circle cx="15" cy="13" r="1.2"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5.5v13M16 5.5v13"/></symbol>
+    <symbol id="g-leaf" viewBox="0 0 24 24"><path d="M5 19.5C5 11 10.5 5 20 4.5c-.2 9.8-6 15-15 15z"/></symbol>
+    <symbol id="g-gear" viewBox="0 0 24 24"><path d="M10.3 2.5h3.4l.5 2.7 2 .9 2.3-1.6 2.4 2.4-1.6 2.3.9 2 2.7.5v3.4l-2.7.5-.9 2 1.6 2.3-2.4 2.4-2.3-1.6-2 .9-.5 2.7h-3.4l-.5-2.7-2-.9-2.3 1.6-2.4-2.4 1.6-2.3-.9-2-2.7-.5v-3.4l2.7-.5.9-2-1.6-2.3 2.4-2.4 2.3 1.6 2-.9zM12 8.6a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8z" fill-rule="evenodd"/></symbol>
+    <symbol id="g-compass" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 5.4-2.4 6.8-6.8 2.4 2.4-6.8z" fill-rule="evenodd"/></symbol>
+    <symbol id="g-column" viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5zM4 8.8h16v2H4zM5.5 12h2.6v6.5H5.5zM10.7 12h2.6v6.5h-2.6zM15.9 12h2.6v6.5h-2.6zM3.5 19.5h17v2h-17z"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="Delta Learning, back to top"><img src="assets/logo-learning.svg" alt="DeltaOps Learning" width="210" height="26"></a>
+    <nav class="links" id="menu" aria-label="Sections">
+      <a href="#platform">Platform</a>
+      <a href="#experiences">Experiences</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#safety">Safety</a>
+      <a href="#how-we-work">How we work</a>
+      <a href="#about">About</a>
+      <a class="btn sm menu-cta" href="#contact">Book a call</a>
+    </nav>
+    <a class="btn sm nav-cta" href="#contact">Book a call</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu"><span class="sr">Menu</span><i aria-hidden="true"></i></button>
+  </div>
+  <div class="progress" aria-hidden="true"></div>
+</header>
+
+<main id="main">
+
+<!-- 1 · Hero -->
+<section class="hero" id="top">
+  <div class="hero-sky" aria-hidden="true"><i class="cube k1"></i><i class="cube k2"></i><i class="cube k3"></i></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="sticker rise" style="--i:0"><span class="dot"></span>White-label AI learning for organisations that work with children</p>
+      <h1 class="rise" style="--i:1">AI learning experiences, <span class="hl">built for your brand.</span></h1>
+      <p class="hero-sub rise" style="--i:2">Launch safe, interactive AI-learning games for the children you already serve. <span class="more-sub">We combine a reusable learning platform with your brand, content and educational goals, then help your team deliver it at scale.</span></p>
+      <div class="cta-row rise" style="--i:3">
+        <a class="btn" href="#contact">Explore a partnership <svg class="arr" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn ghost" href="#platform">See how the platform works</a>
+      </div>
+      <p class="hero-note rise" style="--i:4">Age-appropriate experiences for school-age children, run by your own facilitators.</p>
+    </div>
+
+    <div class="hero-play rise" style="--i:2">
+      <div class="gw hero-gw" data-brand="eco" data-hero-game style="--poster:url(/img/game/world-pond.webp)">
+        <canvas aria-hidden="true"></canvas>
+        <div class="gw-load" aria-hidden="true"><span></span></div>
+        <span class="gw-fic">Fictional brand</span>
+        <button class="gw-pause" type="button" aria-pressed="false" data-pause><svg aria-hidden="true"><use href="#i-pause"/></svg><span class="sr">Pause the game preview</span></button>
+      </div>
+      <div class="note n1" aria-hidden="true"><b>Your logo</b></div>
+      <div class="note n2" aria-hidden="true"><b>Your mission</b></div>
+      <div class="note n3" aria-hidden="true"><b>Your colours</b></div>
+      <div class="brand-tabs" role="group" aria-label="Show a partner brand. Each one is a fictional example." aria-describedby="hero-desc">
+        <button type="button" aria-pressed="true" data-tab="eco"><span class="bt-ico"><svg aria-hidden="true"><use href="#g-leaf"/></svg></span><span><b>Eco AI Explorer</b><small>Nature centre</small></span><i></i></button>
+        <button type="button" aria-pressed="false" data-tab="stem"><span class="bt-ico"><svg aria-hidden="true"><use href="#g-gear"/></svg></span><span><b>AI Inventor Lab</b><small>STEM club</small></span><i></i></button>
+        <button type="button" aria-pressed="false" data-tab="camp"><span class="bt-ico"><svg aria-hidden="true"><use href="#g-compass"/></svg></span><span><b>Mission AI</b><small>Holiday camp</small></span><i></i></button>
+        <button type="button" aria-pressed="false" data-tab="museum"><span class="bt-ico"><svg aria-hidden="true"><use href="#g-column"/></svg></span><span><b>AI Time Traveller</b><small>Museum</small></span><i></i></button>
+      </div>
+      <p class="sr" id="hero-desc" data-hero-desc></p>
+    </div>
+  </div>
+  <div class="ticker" aria-label="What partners get">
+    <div class="ticker-in">
+      <ul><li><b>White-label</b></li><li>Safe by design</li><li>No open chatbot required</li><li>Built for non-specialist facilitators</li><li>Designed for multi-site delivery</li></ul>
+      <ul aria-hidden="true"><li><b>White-label</b></li><li>Safe by design</li><li>No open chatbot required</li><li>Built for non-specialist facilitators</li><li>Designed for multi-site delivery</li></ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- 2 · The problem -->
+<section class="band" id="problem">
+  <div class="wrap prob">
+      <div class="head">
+        <p class="eyebrow reveal">The problem partners face</p>
+        <h2 class="reveal">Organisations want to teach AI. <span class="soft">The delivery environment makes it hard.</span></h2>
+        <p class="lede reveal">In conversations with organisations that teach and host children, the same six problems kept coming up.</p>
+      </div>
+      <ul class="prob-list" data-stagger>
+        <li class="reveal" style="--c:#ff6a4a"><span class="pi"><svg><use href="#i-shield"/></svg></span><div><h3>Open AI access raises safeguarding questions</h3><p>A general-purpose chatbot creates safety and governance concerns that many organisations cannot accept.</p></div></li>
+        <li class="reveal" style="--c:#3f8cff"><span class="pi"><svg><use href="#i-laptop"/></svg></span><div><h3>Every site&rsquo;s devices and networks differ</h3><p>Laptops, browsers, filters and firewalls change from one school or venue to the next.</p></div></li>
+        <li class="reveal" style="--c:#8a5cf6"><span class="pi"><svg><use href="#i-person"/></svg></span><div><h3>Instructors are not AI specialists</h3><p>Great facilitators should be able to run a session well without becoming AI experts first.</p></div></li>
+        <li class="reveal" style="--c:#e8a317"><span class="pi"><svg><use href="#i-puzzle"/></svg></span><div><h3>Generic content does not fit</h3><p>An off-the-shelf course rarely reflects your subject, your audience or your brand.</p></div></li>
+        <li class="reveal" style="--c:#0e9c8e"><span class="pi"><svg><use href="#i-steps"/></svg></span><div><h3>Children need structure and fast feedback</h3><p>An empty prompt box overwhelms younger children, and nobody wants to wait minutes for a result.</p></div></li>
+        <li class="reveal" style="--c:#e0457b"><span class="pi"><svg><use href="#i-smile"/></svg></span><div><h3>It still has to be fun</h3><p>If children are not enjoying it, the learning does not land.</p></div></li>
+      </ul>
+    <figure class="prob-vis reveal" aria-label="An open chatbot next to a Delta Learning experience">
+      <div class="pv-col pv-open">
+        <span class="pv-tag">An open chatbot</span>
+        <div class="pv-screen">
+          <p class="pv-b me">Can you write my essay for me?</p>
+          <p class="pv-b ai">Of course! Here is a 1,000-word essay on&hellip;</p>
+          <p class="pv-b me">What&rsquo;s the best phone to buy?</p>
+          <p class="pv-b me">Tell me everything about volcanoes</p>
+          <p class="pv-b ai wait"><i></i><i></i><i></i></p>
+          <div class="pv-input">Ask me anything<span class="caret"></span></div>
+        </div>
+        <p class="pv-note">Any question, any answer, and a wait for each one.</p>
+      </div>
+      <div class="pv-col pv-ours">
+        <span class="pv-tag good">A Delta Learning experience</span>
+        <div class="pv-screen light">
+          <p class="pv-mission"><small>Mission</small>Keep the lights on after dark</p>
+          <p class="pv-card"><b>A</b>Keep the lights on all night</p>
+          <p class="pv-card on"><b>B</b>Use only wind and sun</p>
+          <p class="pv-card"><b>C</b>Add a battery</p>
+          <p class="pv-result"><i></i>Instant result: the lights go out at 18:00</p>
+        </div>
+        <p class="pv-note">A clear mission, bounded choices and an instant result.</p>
+      </div>
+    </figure>
+  </div>
+  <div class="wrap"><a class="bridge reveal" href="#platform"><span><b>Delta Learning was designed around these constraints.</b> Play a mission and see how a child moves through it.</span><span class="bridge-arr" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span></a></div>
+</section>
+
+<!-- 3 · How it works -->
+<section class="band night platform" id="platform">
+  <div class="stars" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="head split">
+      <div>
+        <p class="eyebrow reveal">How Delta Learning works</p>
+        <h2 class="reveal">Children make a choice. <span class="soft">They see what it changed.</span></h2>
+      </div>
+      <p class="lede reveal">Every experience runs on the same loop. Try it: a simplified mission from our Eco Town prototype.</p>
+    </div>
+
+    <ol class="flow reveal" aria-label="The learning loop" data-flow>
+      <li data-step="mission"><b>Mission</b><span>A clear goal</span></li>
+      <li data-step="decision"><b>Decision</b><span>Bounded choices</span></li>
+      <li data-step="response"><b>Response</b><span>What the system assumed</span></li>
+      <li data-step="consequence"><b>Consequence</b><span>Visible, instant results</span></li>
+      <li data-step="iterate"><b>Reflect</b><span>Try another path</span></li>
+      <li data-step="outcome"><b>Outcome</b><span>Something they made</span></li>
+    </ol>
+
+    <div class="demo reveal" data-demo>
+      <div class="gw demo-gw" role="img" aria-label="Eco Town: a hillside town with wind turbines, solar roofs, a battery and a gas plant" data-brand="delta" data-demo-game style="--poster:url(/img/game/world-town.webp)">
+        <canvas aria-hidden="true"></canvas>
+        <div class="gw-load" aria-hidden="true"><span></span></div>
+        <div class="hud dm-hud" aria-hidden="true">
+          <div class="hd-top">
+            <div class="hd-brand"><span class="hd-logo"><svg viewBox="0 0 24 24"><use href="#i-bolt"/></svg></span><span><b>Eco Town</b><small>Energy &middot; stage 4 of 6</small></span></div>
+            <div class="hd-stats"><span class="hd-stat dm-clock"><i data-clock-label>Test day</i><b data-clock>18:00</b></span></div>
+          </div>
+          <span class="dm-status" data-status hidden></span>
+        </div>
+        <span class="gw-fic">Illustrative demo</span>
+      </div>
+
+      <div class="demo-side">
+        <div class="guide-head"><span class="guide-ico" aria-hidden="true"><svg><use href="#i-bot"/></svg></span><p><b>Lab Guide</b><span>Prototype AI &middot; scripted &middot; can be wrong</span></p></div>
+        <p class="cap">Mission</p>
+        <p class="mission">Your town on the windy hill has 6 wind turbines and solar panels on 20 roofs. <b>Now keep the lights on after dark.</b></p>
+        <p class="pick" data-pick>Pick a card to tell the AI helper what to do.</p>
+        <div class="cards" role="group" aria-label="Prompt cards">
+          <button type="button" class="card" data-card="0" aria-pressed="false"><span class="card-n">A</span><span>&ldquo;Keep the lights on all night&rdquo;</span></button>
+          <button type="button" class="card" data-card="1" aria-pressed="false"><span class="card-n">B</span><span>&ldquo;Use only wind and sun, nothing else&rdquo;</span></button>
+          <button type="button" class="card" data-card="2" aria-pressed="false"><span class="card-n">C</span><span>&ldquo;Add a battery, and keep gas under 10% of the power&rdquo;</span></button>
+        </div>
+        <noscript><p class="pick">This demo needs JavaScript.</p></noscript>
+        <ol class="howto" data-howto>
+          <li><b>Pick a card.</b> The AI helper acts on what you said, and fills in what you did not.</li>
+          <li><b>Watch the test day.</b> The town runs for 24 hours and the lights tell you how it went.</li>
+          <li><b>Try another card.</b> Compare the results, then keep the plan you can explain.</li>
+        </ol>
+        <p class="paths" data-paths><b>729</b><span>possible paths through each world in the full prototype: six stages, with three cards at each. There is no single right answer.</span></p>
+
+        <div class="result" data-result aria-live="polite" hidden>
+          <div class="says"><span class="cap">The guide said</span><p data-says></p></div>
+          <div class="assumed"><span class="tag" data-tag>AI guessed</span><p data-assumed></p></div>
+          <p class="effect" data-effect></p>
+          <div class="meters">
+            <p><span>People</span><i><b data-bar="people"></b></i><em data-m="people">0</em></p>
+            <p><span>Planet</span><i><b data-bar="planet"></b></i><em data-m="planet">0</em></p>
+          </div>
+          <p class="tradeoff" data-tradeoff></p>
+          <div class="facil"><span class="cap">Facilitator prompt</span><p data-facil></p></div>
+          <div class="result-actions">
+            <button type="button" class="btn sm" data-keep>Keep this plan</button>
+            <button type="button" class="btn sm ghost" data-again>Try another card</button>
+          </div>
+        </div>
+
+        <div class="outcome" data-outcome hidden>
+          <span class="cap">Outcome &middot; your town&rsquo;s energy plan</span>
+          <p class="outcome-title" data-outcome-title></p>
+          <dl data-outcome-list></dl>
+          <p class="outcome-note">Another child could keep a different plan and explain why. Different choices create different outcomes.</p>
+          <button type="button" class="btn sm ghost" data-restart>Start again</button>
+        </div>
+      </div>
+
+      <div class="chart">
+        <div class="chart-head">
+          <span class="cap">24-hour test</span>
+          <span class="legend"><span><i class="k-sun"></i>Solar</span><span><i class="k-wind"></i>Wind</span><span><i class="k-bat"></i>Battery</span><span><i class="k-gas"></i>Gas</span><span><i class="k-short"></i>Not enough</span></span>
+        </div>
+        <div class="chart-plot">
+          <svg viewBox="0 0 480 120" preserveAspectRatio="none" data-chart aria-hidden="true"></svg>
+          <p class="chart-empty" data-chart-empty><span>Pick a card to run the test day</span></p>
+        </div>
+        <div class="scrub">
+          <label for="hour" class="sr">Time of day</label>
+          <input id="hour" type="range" min="0" max="23" step="1" value="18" data-hour disabled>
+          <span class="scrub-ticks" aria-hidden="true"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:00</span></span>
+        </div>
+      </div>
+      <div class="path" data-path hidden><span class="cap">Your path</span><ol data-path-list></ol></div>
+    </div>
+    <p class="demo-note reveal">Numbers are simplified for the web. In our AI Lab prototype, each stage deals three cards, one of them vague, so the AI has to guess. The AI helper is a scripted simulation, so no live AI model is involved.</p>
+  </div>
+</section>
+
+<!-- 3b · Game patterns -->
+<section class="band patterns" id="patterns">
+  <div class="wrap">
+    <div class="head split">
+      <div>
+        <p class="eyebrow reveal">Designed from the games children know</p>
+        <h2 class="reveal">Built from the games children <span class="soft">already play.</span></h2>
+      </div>
+      <p class="lede reveal">We looked at the games that fill UK classrooms, after-school clubs and holiday camps, then used their most familiar patterns to practise judgement.</p>
+    </div>
+    <div class="pat-grid" data-stagger>
+      <article class="pat reveal" style="--c:#2bb673"><div class="pat-vis v-world" aria-hidden="true"><img src="img/game/tile-world.webp" alt="" width="360" height="240" loading="lazy"><span class="plus">+1</span></div><h3>Worlds to build and change</h3><p>Children change a world and watch what happens. Cause and effect becomes something they can see.</p><span class="pat-tag">Eco Town, Eco AI Explorer</span></article>
+      <article class="pat reveal" style="--c:#ff6a2b"><div class="pat-vis v-vote" aria-hidden="true"><span class="ring"></span><span class="bar a">A</span><span class="bar b">B</span><span class="bar c">C</span></div><h3>Team votes against the clock</h3><p>A group argues, votes and commits to a decision, then tests it together.</p><span class="pat-tag">Mission AI</span></article>
+      <article class="pat reveal" style="--c:#e8a317"><div class="pat-vis v-stars" aria-hidden="true"><div class="st-row"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div><div class="lvl-bar"><b>Level 4</b><span><i></i></span><b>5</b></div><span class="xp">+120 XP</span></div><h3>Stars, levels and ranks</h3><p>Progress children recognise straight away, with rewards for testing and improving as well as for getting it right.</p><span class="pat-tag">Every experience</span></article>
+      <article class="pat reveal" style="--c:#b6392a"><div class="pat-vis v-collect" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M5 19.5C5 11 10.5 5 20 4.5c-.2 9.8-6 15-15 15z"/></svg></span><span><svg viewBox="0 0 24 24"><path d="M9 2h6v2.5c0 .8.6 1.2 1.2 1.6 2 1.3 3.3 3.5 3.3 6.4 0 4.2-3 7.6-5.5 9.5h-4C7.5 20.1 4.5 16.7 4.5 12.5c0-2.9 1.3-5.1 3.3-6.4.6-.4 1.2-.8 1.2-1.6z"/></svg></span><span><svg viewBox="0 0 24 24"><path d="M4 7.5h3l1.6-2.5h6.8L17 7.5h3A1.5 1.5 0 0 1 21.5 9v9.5A1.5 1.5 0 0 1 20 20H4a1.5 1.5 0 0 1-1.5-1.5V9A1.5 1.5 0 0 1 4 7.5zM12 9.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8z" fill-rule="evenodd"/></svg></span><span><svg viewBox="0 0 24 24"><path d="M12 2.6l2.8 5.7 6.3.9-4.6 4.4 1.1 6.2L12 16.9l-5.6 2.9 1.1-6.2-4.6-4.4 6.3-.9z"/></svg></span></div><h3>Collections and journals</h3><p>Species, artefacts and photos to find. What they collect becomes a record of how they reached an answer.</p><span class="pat-tag">AI Time Traveller, Eco AI Explorer</span></article>
+      <article class="pat reveal" style="--c:#5b4cf0"><div class="pat-vis v-code" aria-hidden="true"><span class="hat">When mission starts</span><span>drive slowly</span><span class="o">scan for rocks</span></div><h3>Snap-together instructions</h3><p>Instructions built from blocks that children can rearrange, test and fix.</p><span class="pat-tag">AI Inventor Lab</span></article>
+      <article class="pat reveal" style="--c:#0e9c8e"><div class="pat-vis v-bot" aria-hidden="true"><img src="img/obj/bot.webp" alt="" width="320" height="320" loading="lazy"><span>I guessed &ldquo;nice&rdquo; means neat. Was I right?</span></div><h3>A helper character</h3><p>An AI helper that guesses, explains and is sometimes wrong, so children learn to check it.</p><span class="pat-tag">Every experience</span></article>
+    </div>
+    <div class="pat-foot reveal">
+      <p class="stat"><b>46%</b><span>Creative and building games are the most played type of game among UK children aged 3 to 12. Puzzles and quizzes come next, at 36%.</span><cite><a href="https://www.ofcom.org.uk/siteassets/resources/documents/research-and-data/media-literacy-research/children/childrens-media-use-and-attitudes-report-2025/childrens-media-literacy-report-2025.pdf" target="_blank" rel="noopener">Ofcom, Children and Parents: Media Use and Attitudes Report, May 2025. Share of children aged 3 to 12 who play games.</a></cite></p>
+      <p class="pat-safe"><svg aria-hidden="true"><use href="#i-shield"/></svg><span>We borrow the patterns children know. Our prototypes have no adverts, no chat between players and nothing to buy.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · One platform, many experiences -->
+<section class="band sky" id="experiences">
+  <div class="wrap">
+    <div class="head split">
+      <div>
+        <p class="eyebrow reveal">One platform, many experiences</p>
+        <h2 class="reveal">One platform. <span class="soft">Many learning worlds.</span></h2>
+      </div>
+      <p class="lede reveal">The learning model stays the same. The story, objectives, branding and experience become yours.</p>
+    </div>
+
+    <div class="hub" data-hub>
+      <svg class="wires" aria-hidden="true"></svg>
+      <article class="world reveal" data-brand="eco">
+        <div class="gw mini-gw" data-mini="eco" style="--poster:url(/img/game/world-pond.webp)"><canvas aria-hidden="true"></canvas><span class="mini-chip"><svg aria-hidden="true"><use href="#g-leaf"/></svg>Eco AI Explorer</span></div>
+        <div class="world-body"><span class="cap">Nature centre &middot; habitat builder</span><p>Children design a pond, balance wildlife, visitors and resources, and learn to challenge assumptions.</p><p class="world-foot"><span class="world-out">Output: a habitat plan</span><button type="button" class="watch" data-watch="eco">Watch it play <svg aria-hidden="true"><use href="#i-play"/></svg></button></p></div>
+      </article>
+      <article class="world reveal" data-brand="stem">
+        <div class="gw mini-gw" data-mini="stem" style="--poster:url(/img/game/world-mars.webp)"><canvas aria-hidden="true"></canvas><span class="mini-chip"><svg aria-hidden="true"><use href="#g-gear"/></svg>AI Inventor Lab</span></div>
+        <div class="world-body"><span class="cap">STEM club &middot; coding mission</span><p>Children program a rover, refine instructions, test on sand and check what its camera claims to see.</p><p class="world-foot"><span class="world-out">Output: a rover spec sheet</span><button type="button" class="watch" data-watch="stem">Watch it play <svg aria-hidden="true"><use href="#i-play"/></svg></button></p></div>
+      </article>
+      <div class="core reveal">
+        <div class="core-orbit"><span class="core-logo"><img src="assets/mark.svg" alt="" width="44" height="44"></span></div>
+        <b>The Delta Learning engine</b>
+        <ul><li><svg aria-hidden="true"><use href="#i-flag"/></svg>Missions</li><li><svg aria-hidden="true"><use href="#i-vote"/></svg>Choice cards</li><li><svg aria-hidden="true"><use href="#i-bot"/></svg>System responses</li><li><svg aria-hidden="true"><use href="#i-bolt"/></svg>Consequences</li><li><svg aria-hidden="true"><use href="#i-loop"/></svg>Replay and compare</li><li><svg aria-hidden="true"><use href="#i-eye"/></svg>Facilitator view</li></ul>
+      </div>
+      <article class="world reveal" data-brand="camp">
+        <div class="gw mini-gw" data-mini="camp" style="--poster:url(/img/game/world-island.webp)"><canvas aria-hidden="true"></canvas><span class="mini-chip"><svg aria-hidden="true"><use href="#g-compass"/></svg>Mission AI</span></div>
+        <div class="world-body"><span class="cap">Holiday camp &middot; team expedition</span><p>Teams vote on a route against the clock, see what the AI assumed, and plan again before sunset.</p><p class="world-foot"><span class="world-out">Output: an expedition map</span><button type="button" class="watch" data-watch="camp">Watch it play <svg aria-hidden="true"><use href="#i-play"/></svg></button></p></div>
+      </article>
+      <article class="world reveal" data-brand="museum">
+        <div class="gw mini-gw" data-mini="museum" style="--poster:url(/img/game/world-rome.webp)"><canvas aria-hidden="true"></canvas><span class="mini-chip"><svg aria-hidden="true"><use href="#g-column"/></svg>AI Time Traveller</span></div>
+        <div class="world-body"><span class="cap">Museum &middot; evidence hunt</span><p>Children test the AI&rsquo;s version of the past against evidence from the venue&rsquo;s own collection.</p><p class="world-foot"><span class="world-out">Output: a traveller&rsquo;s diary</span><button type="button" class="watch" data-watch="museum">Watch it play <svg aria-hidden="true"><use href="#i-play"/></svg></button></p></div>
+      </article>
+    </div>
+    <p class="fiction reveal">All four brands are fictional examples. The engine is real and running in our prototypes.</p>
+
+    <div class="same reveal">
+      <div class="same-col">
+        <span class="cap">Changes for each partner</span>
+        <ul><li>Brand, look and tone</li><li>Story and setting</li><li>Learning objectives</li><li>Activities and choices</li><li>The final output</li></ul>
+      </div>
+      <div class="same-col keep">
+        <span class="cap">Stays the same</span>
+        <ul><li>The decision loop children learn</li><li>Safety controls</li><li>Facilitator materials and training</li><li>A delivery model built for many sites</li><li>Evidence from every pilot</li></ul>
+      </div>
+      <p class="same-note">Start with one experience and add new worlds or modules over time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · Use cases -->
+<section class="band" id="use-cases">
+  <div class="wrap">
+    <div class="head obj">
+      <div>
+        <p class="eyebrow reveal">Use cases</p>
+        <h2 class="reveal">For organisations that <span class="soft">already work with children.</span></h2>
+        <p class="lede reveal">You already have the audience, the setting and the trust. We help you add an AI-learning experience that fits them.</p>
+      </div>
+      <img class="head-obj reveal" src="img/obj/pin.webp" alt="" width="320" height="320" loading="lazy">
+    </div>
+    <div class="uses" data-stagger>
+      <article class="use reveal u-wide"><img src="img/photo/stem-800.jpg" srcset="img/photo/stem-800.jpg 800w, img/photo/stem-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 40vw" alt="Illustration: three children at an after-school club work on a laptop beside a cardboard wind turbine model." width="800" height="533" loading="lazy"><div><h3>Education and STEM providers</h3><p class="u-ex">Coding and computing franchises, enrichment providers, tutoring organisations, after-school operators, curriculum providers</p><p class="u-could"><span class="cap">You could launch</span>A licensed AI module that runs the same way in every franchise, club and classroom.</p></div></article>
+      <article class="use reveal u-wide"><img src="img/photo/camp-800.jpg" srcset="img/photo/camp-800.jpg 800w, img/photo/camp-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 40vw" alt="Illustration: children in camp t-shirts laugh together over a tablet in a sports hall while a young leader kneels beside them." width="800" height="533" loading="lazy"><div><h3>Camps and activity providers</h3><p class="u-ex">Holiday camps, activity-centre networks, youth programmes, residential centres</p><p class="u-could"><span class="cap">You could launch</span>A themed AI challenge that fits a camp session and that any trained leader can run.</p></div></article>
+      <article class="use reveal"><img src="img/photo/museum-800.jpg" srcset="img/photo/museum-800.jpg 800w, img/photo/museum-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 30vw" alt="Illustration: two children at a museum screen point towards a fossil skeleton while a learning officer explains." width="800" height="533" loading="lazy"><div><h3>Visitor and cultural organisations</h3><p class="u-ex">Museums, science centres, environmental centres, attractions, educational visitor experiences</p><p class="u-could"><span class="cap">You could launch</span>A mission built from your collection or site, for school visits and family days.</p></div></article>
+      <article class="use reveal"><img src="img/photo/nature-800.jpg" srcset="img/photo/nature-800.jpg 800w, img/photo/nature-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 30vw" alt="Illustration: three children at a woodland picnic table compare a leaf with a tablet while an educator looks on." width="800" height="533" loading="lazy"><div><h3>Schools and school networks</h3><p class="u-ex">Schools, academy groups, educational trusts, school clubs</p><p class="u-could"><span class="cap">You could launch</span>AI learning that is easier to govern than an open chatbot, delivered the same way across your schools.</p></div></article>
+      <article class="use reveal u-plain"><img class="u-island" src="img/game/tile-world.webp" alt="" width="360" height="240" loading="lazy"><div><h3>Youth-focused brands and organisations</h3><p class="u-ex">Charities, libraries, community programmes, clubs</p><p class="u-could"><span class="cap">You could launch</span>An AI-learning experience in your name, for the children you already reach.</p><a class="more" href="#contact">Discuss your use case</a></div></article>
+    </div>
+    <p class="fiction">Photographs are illustrative and do not show real deployments.</p>
+  </div>
+</section>
+
+<!-- 6 · Human judgement -->
+<section class="band mint" id="learning">
+  <div class="wrap">
+    <div class="judge">
+      <div class="judge-copy">
+        <p class="eyebrow reveal">Built around human judgement</p>
+        <h2 class="reveal">Children make <span class="soft">the decisions.</span></h2>
+        <p class="lede reveal">The system can suggest, assume and respond. Children still decide what to trust, what to change and what to do next.</p>
+        <p class="body reveal">They see the consequences of their choices, test different paths and explain the thinking behind the result. These habits stay useful whichever AI tools children meet later, and they matter more than learning one product that may look very different in two years.</p>
+      </div>
+      <figure class="judge-photo reveal">
+        <img src="img/photo/decide-800.jpg" srcset="img/photo/decide-800.jpg 800w, img/photo/decide-1600.jpg 1600w" sizes="(max-width:1000px) 100vw, 46vw" alt="Illustration: two children debate a choice on a tablet while a facilitator listens." width="800" height="533" loading="lazy">
+        <figcaption class="ask"><span class="cap">Facilitator</span>&ldquo;You chose the vague card. What happened? What might you try instead?&rdquo;</figcaption>
+      </figure>
+    </div>
+
+    <div class="judge-2">
+      <div class="cycle-box reveal">
+        <span class="cap">Steps 2 to 5 of the loop, up close</span>
+        <div class="cycle" data-loopd>
+          <img class="cycle-bot" src="img/obj/bot.webp" alt="" width="320" height="320" loading="lazy">
+          <ol aria-label="Decision, response, consequence, reflect, new decision">
+            <li style="--a:-90deg"><b>Decision</b><span>The child chooses</span></li>
+            <li style="--a:-18deg"><b>Response</b><span>What it did and assumed</span></li>
+            <li style="--a:54deg"><b>Consequence</b><span>What changed, and why</span></li>
+            <li style="--a:126deg"><b>Reflect</b><span>Was that what they meant?</span></li>
+            <li style="--a:198deg"><b>New decision</b><span>Keep it, or try again</span></li>
+          </ol>
+        </div>
+      </div>
+      <div class="habits-box">
+        <span class="cap reveal">Habits children practise</span>
+        <ul class="habits" data-stagger>
+          <li class="reveal"><span class="hi"><svg><use href="#i-target"/></svg></span><b>Define a goal</b><span>Say what success looks like before starting.</span></li>
+          <li class="reveal"><span class="hi"><svg><use href="#i-message"/></svg></span><b>Give clear instructions</b><span>Say what they mean, so the system has less to guess.</span></li>
+          <li class="reveal"><span class="hi"><svg><use href="#i-eye"/></svg></span><b>Spot assumptions</b><span>Notice what the system filled in for them.</span></li>
+          <li class="reveal"><span class="hi"><svg><use href="#i-check"/></svg></span><b>Question the output</b><span>Catch weak or incorrect results.</span></li>
+          <li class="reveal"><span class="hi"><svg><use href="#i-flask"/></svg></span><b>Test fairly</b><span>Change one thing and compare alternatives.</span></li>
+          <li class="reveal"><span class="hi"><svg><use href="#i-arrows"/></svg></span><b>Follow cause and effect</b><span>Work out why the outcome changed.</span></li>
+          <li class="reveal"><span class="hi"><svg><use href="#i-decide"/></svg></span><b>Decide and explain</b><span>Choose a path and give reasons for it.</span></li>
+          <li class="reveal"><span class="hi"><svg><use href="#i-flag"/></svg></span><b>Own the result</b><span>Take responsibility for the final outcome.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · Safety -->
+<section class="band night safety" id="safety">
+  <div class="stars" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="head obj">
+      <div>
+        <p class="eyebrow reveal">Safe and practical to deploy</p>
+        <h2 class="reveal">AI learning <span class="soft">without an open chatbot.</span></h2>
+        <p class="lede reveal">Children practise the behaviours behind working with AI without unrestricted access to a general-purpose AI model. You keep control of content, pace, privacy and delivery.</p>
+      </div>
+      <img class="head-obj reveal" src="img/obj/shield.webp" alt="" width="320" height="320" loading="lazy">
+    </div>
+
+    <div class="compare reveal" role="table" aria-label="An open chatbot compared with a Delta Learning experience">
+      <div class="cmp-row cmp-head" role="row"><span role="columnheader"><span class="sr">Question</span></span><span role="columnheader">An open chatbot</span><span role="columnheader">A Delta Learning experience</span></div>
+      <div class="cmp-row" role="row"><span role="rowheader">What children can ask</span><span role="cell">Anything at all</span><span role="cell"><i class="tick" aria-hidden="true"></i>Choices designed for the lesson</span></div>
+      <div class="cmp-row" role="row"><span role="rowheader">What comes back</span><span role="cell">Open-ended, unpredictable output</span><span role="cell"><i class="tick" aria-hidden="true"></i>Responses designed and tested in advance</span></div>
+      <div class="cmp-row" role="row"><span role="rowheader">Accounts</span><span role="cell">Usually an individual login</span><span role="cell"><i class="tick" aria-hidden="true"></i>No child accounts</span></div>
+      <div class="cmp-row" role="row"><span role="rowheader">Waiting</span><span role="cell">Seconds or minutes per answer</span><span role="cell"><i class="tick" aria-hidden="true"></i>Instant feedback</span></div>
+      <div class="cmp-row" role="row"><span role="rowheader">Connection</span><span role="cell">A live link to an AI service</span><span role="cell"><i class="tick" aria-hidden="true"></i>No AI service needed during a session</span></div>
+    </div>
+
+    <ul class="safe-list" data-stagger>
+      <li class="reveal"><span class="si"><svg><use href="#i-chat-off"/></svg></span><div><h3>Controlled by design</h3><p>Children choose from prompt cards and work with a guided AI helper. Its responses are designed and tested in advance, and no open chatbot is involved.</p></div></li>
+      <li class="reveal"><span class="si"><svg><use href="#i-laptop"/></svg></span><div><h3>Built for real devices</h3><p>We design around the browsers and devices you already have, and check them before a pilot. Our current prototypes are tested in desktop Chrome and Safari.</p></div></li>
+      <li class="reveal"><span class="si"><svg><use href="#i-key"/></svg></span><div><h3>Minimal setup</h3><p>No child accounts and no individual AI logins. Our prototypes keep progress in the browser on the device being used.</p></div></li>
+      <li class="reveal"><span class="si"><svg><use href="#i-bolt"/></svg></span><div><h3>Fast feedback</h3><p>Pre-built interactions respond straight away, so children are not waiting on a generative model.</p></div></li>
+      <li class="reveal"><span class="si"><svg><use href="#i-cap"/></svg></span><div><h3>Facilitator-ready</h3><p>Non-specialist facilitators get session plans, on-screen prompts and training before they run anything.</p></div></li>
+      <li class="reveal"><span class="si"><svg><use href="#i-sliders"/></svg></span><div><h3>Designed around your environment</h3><p>Firewalls, connectivity, safeguarding and data needs are agreed during design. Offline-capable experiences can be built where the setting needs them.</p></div></li>
+    </ul>
+    <p class="today reveal"><b>Where we are today:</b> our experiences are prototypes in development. We confirm the technical set-up, data handling and safeguarding approach with each partner before any pilot.</p>
+  </div>
+</section>
+
+<!-- 8 · What partners get -->
+<section class="band" id="package">
+  <div class="wrap">
+    <div class="head obj">
+      <div>
+        <p class="eyebrow reveal">What partners get</p>
+        <h2 class="reveal">Everything you need to <span class="soft">launch it, run it and grow it.</span></h2>
+        <p class="lede reveal">A working product and the support around it, licensed for the sites, learners or network you agree.</p>
+      </div>
+      <img class="head-obj reveal" src="img/obj/chest.webp" alt="" width="320" height="320" loading="lazy">
+    </div>
+    <div class="inv reveal">
+      <div class="inv-row" style="--c:#2bb673">
+        <span class="inv-cap">For children</span>
+        <ul>
+          <li><span class="slot"><svg><use href="#i-brush"/></svg></span><b>Branded learner experience</b><span>Your name, look and tone on every screen.</span></li>
+          <li><span class="slot"><svg><use href="#i-game"/></svg></span><b>Interactive games and scenarios</b><span>Missions with bounded choices, visible results and room to replay.</span></li>
+          <li><span class="slot"><svg><use href="#i-book"/></svg></span><b>Curriculum and learning design</b><span>Objectives, progression and outputs mapped to what you teach.</span></li>
+        </ul>
+      </div>
+      <div class="inv-row" style="--c:#3f9cff">
+        <span class="inv-cap">For your team</span>
+        <ul>
+          <li><span class="slot"><svg><use href="#i-clip"/></svg></span><b>Facilitator lesson plans</b><span>Timings, prompts, expected outcomes and extension challenges.</span></li>
+          <li><span class="slot"><svg><use href="#i-cap"/></svg></span><b>Instructor training</b><span>Your team practises every session before running it.</span></li>
+          <li><span class="slot"><svg><use href="#i-plug"/></svg></span><b>Deployment support</b><span>Device checks, technical checklists and troubleshooting guidance.</span></li>
+        </ul>
+      </div>
+      <div class="inv-row" style="--c:#a07cff">
+        <span class="inv-cap">For growth</span>
+        <ul>
+          <li><span class="slot"><svg><use href="#i-chart"/></svg></span><b>Pilot and evaluation</b><span>A small pilot, with success criteria agreed in advance.</span></li>
+          <li><span class="slot"><svg><use href="#i-loop"/></svg></span><b>Ongoing improvements</b><span>Feedback from real sessions turns into regular updates.</span></li>
+          <li><span class="slot"><svg><use href="#i-network"/></svg></span><b>Licensing for your network</b><span>Agreed sites, learners or network, with room to add new worlds.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="enable reveal">
+      <figure class="enable-photo"><img src="img/photo/facilitator-800.jpg" srcset="img/photo/facilitator-800.jpg 800w, img/photo/facilitator-1600.jpg 1600w" sizes="(max-width:1000px) 100vw, 45vw" alt="Illustration: a facilitator asks a question beside a large screen of three choice cards while children raise their hands." width="800" height="533" loading="lazy"></figure>
+      <div class="enable-copy">
+        <span class="cap">Instructor enablement</span>
+        <h3>Your instructors do not need to become AI experts.</h3>
+        <p>Training covers how to teach each session as well as how to use the software, and it ends with every instructor running a complete session.</p>
+        <ol class="train">
+          <li><b>Philosophy</b><span>Why we teach AI this way</span></li>
+          <li><b>Experience</b><span>Do the activities as learners</span></li>
+          <li><b>Delivery</b><span>Practise teaching each one</span></li>
+          <li><b>Troubleshooting</b><span>What to do when things go off plan</span></li>
+          <li><b>Confidence</b><span>Run a full session</span></li>
+        </ol>
+        <p class="plan-items"><span class="cap">Every session plan covers</span><span class="chips"><span>Timing</span><span>Objectives</span><span>Instructor prompts</span><span>Expected outcomes</span><span>Common problems</span><span>Support and extension challenges</span><span>Technical checklist</span></span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 · Ways to work together -->
+<section class="band sun" id="models">
+  <div class="wrap">
+    <div class="head obj">
+      <div>
+        <p class="eyebrow reveal">Ways to work together</p>
+        <h2 class="reveal">License it, customise it <span class="soft">or build something new.</span></h2>
+        <p class="lede reveal">Pick the route that matches your goals, timeline and network. Pricing depends on your sites, learners and how much we adapt.</p>
+      </div>
+      <img class="head-obj reveal" src="img/obj/sign.webp" alt="" width="320" height="320" loading="lazy">
+    </div>
+    <p class="axis reveal" aria-hidden="true"><span>Fastest to launch</span><i></i><span>Most tailored to you</span></p>
+    <div class="routes" data-stagger>
+      <article class="route reveal" style="--c:#1f9d55">
+        <span class="lvl">Route 1</span>
+        <h3>License an experience</h3>
+        <p>Start with an existing Delta Learning experience in your brand, set up for the way you deliver.</p>
+        <ul class="adapts"><li class="y">Brand and delivery</li><li class="n">Theme, objectives and activities</li><li class="n">A new mechanic or world</li></ul>
+        <p class="best"><b>Best for</b> partners who want a quick route to market</p>
+      </article>
+      <article class="route reveal" style="--c:#3f8cff">
+        <span class="lvl">Route 2</span>
+        <h3>Customise an experience</h3>
+        <p>Take an existing learning mechanic or world and adapt the theme, objectives, activities, branding or curriculum.</p>
+        <ul class="adapts"><li class="y">Brand and delivery</li><li class="y">Theme, objectives and activities</li><li class="n">A new mechanic or world</li></ul>
+        <p class="best"><b>Best for</b> organisations with a clear subject area or audience</p>
+      </article>
+      <article class="route reveal" style="--c:#ff6a2b">
+        <span class="lvl">Route 3</span>
+        <h3>Co-create a new experience</h3>
+        <p>Design a new module with us around your educational goals, content, brand and delivery model.</p>
+        <ul class="adapts"><li class="y">Brand and delivery</li><li class="y">Theme, objectives and activities</li><li class="y">A new mechanic or world</li></ul>
+        <p class="best"><b>Best for</b> strategic partners and networks</p>
+      </article>
+    </div>
+    <div class="cta-strip reveal">
+      <p><b>Talk to us about licensing.</b><span>Licences can combine an annual platform licence, learner or usage-based licensing, a network or white-label licence, setup and customisation, and bespoke module development.</span></p>
+      <a class="btn" href="#contact">Discuss your use case <svg class="arr" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · From pilot to scale -->
+<section class="band method" id="how-we-work">
+  <div class="wrap">
+    <div class="head obj">
+      <div>
+        <p class="eyebrow reveal">How we work &middot; from pilot to scale</p>
+        <h2 class="reveal">Start small. <span class="soft">Scale what works.</span></h2>
+        <p class="lede reveal">Nobody commits blindly. We build one experience, test it with real learners and facilitators, then improve it before wider rollout. After each stage we decide together whether to carry on, change the plan or stop.</p>
+      </div>
+      <img class="head-obj reveal" src="img/obj/trophy.webp" alt="" width="320" height="320" loading="lazy">
+    </div>
+    <ol class="levels" data-levels>
+      <li style="--i:0"><span class="lv-n">1</span><h3>Discover</h3><p>Understand the audience, objectives, delivery setting, instructors, devices and commercial model.</p><span class="lv-out">A shared brief</span><p class="lv-gate"><b>Then we ask</b>Do we understand the goals and the setting?</p></li>
+      <li style="--i:1"><span class="lv-n">2</span><h3>Design</h3><p>Define the child&rsquo;s mission, learning outcomes, interaction model and success criteria.</p><span class="lv-out">An experience design</span><p class="lv-gate"><b>Then we ask</b>Do we agree on the learning model and priorities?</p></li>
+      <li style="--i:2"><span class="lv-n">3</span><h3>Build</h3><p>Create the branded experience, lesson materials and facilitator support.</p><span class="lv-out">A pilot-ready experience</span><p class="lv-gate"><b>Then we ask</b>Is it ready for a controlled pilot?</p></li>
+      <li style="--i:3"><span class="lv-n">4</span><h3>Pilot</h3><p>Test with real children and instructors in a controlled setting.</p><span class="lv-out">Evidence against the criteria</span><p class="lv-gate"><b>Then we ask</b>What must change before wider rollout?</p></li>
+      <li style="--i:4"><span class="lv-n">5</span><h3>Improve</h3><p>Use the evidence and feedback to refine the experience.</p><span class="lv-out">A release for rollout</span><p class="lv-gate"><b>Then we ask</b>Did the changes do what we expected?</p></li>
+      <li style="--i:5"><span class="lv-n">6</span><h3>Scale</h3><p>License it across the agreed network, sites, cohorts or learner volumes.</p><span class="lv-out">A licensed rollout</span><p class="lv-gate"><b>Then we ask</b>Is the operating model ready to scale further?</p></li>
+    </ol>
+
+    <div class="measure reveal">
+      <p class="chain" aria-label="Small pilot, then evidence, then refinement, then network rollout"><span>Small pilot</span><span>Evidence</span><span>Refinement</span><span>Network rollout</span></p>
+      <div>
+        <span class="cap">What a pilot can measure</span>
+        <ul class="chips">
+          <li>Learner engagement</li><li>Ability to explain decisions</li><li>Completion</li><li>Replay and experimentation</li><li>Instructor confidence</li><li>Delivery time</li><li>Technical reliability</li><li>Support load</li><li>Parent and school feedback</li>
+        </ul>
+        <p class="fine">We agree the targets with you before the pilot starts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 · About -->
+<section class="band" id="about">
+  <div class="wrap">
+    <div class="about">
+      <div class="about-copy">
+        <p class="eyebrow reveal">About</p>
+        <h2 class="reveal">Built by the team <span class="soft">behind DeltaOps.</span></h2>
+        <p class="lede reveal">DeltaOps designs AI training and workflow systems for organisations. Delta Learning applies that experience to how children learn to work with AI.</p>
+        <p class="body reveal">We started with hands-on AI workshops for children. Talking with organisations that already teach and host children showed us a bigger need: a safe experience in their own brand that their own teams could run, at every site. The DeltaOps team has also trained more than 250 executives and SME founders to use AI at work.</p>
+        <a class="more reveal" href="https://deltaops.consulting" target="_blank" rel="noopener">Visit deltaops.consulting</a>
+      </div>
+      <div class="shelf reveal">
+        <span class="cap">Prototyped in-house so far</span>
+        <p class="shelf-sub">The four worlds of our AI Lab prototype, plus Kick Lab and Beat Lab.</p>
+        <ul class="themes">
+          <li style="--c:#1f9d55"><img src="img/obj/turbine.webp" alt="" width="220" height="220" loading="lazy"><span>Energy</span><b>Eco Town</b></li>
+          <li style="--c:#1f9fd6"><img src="img/obj/drop.webp" alt="" width="220" height="220" loading="lazy"><span>Water</span><b>River Town</b></li>
+          <li style="--c:#e8a317"><img src="img/obj/sprout.webp" alt="" width="220" height="220" loading="lazy"><span>Food</span><b>Grow Lab</b></li>
+          <li style="--c:#7a6cff"><img src="img/obj/rocket.webp" alt="" width="220" height="220" loading="lazy"><span>Space</span><b>Moon Base</b></li>
+          <li style="--c:#ff6a2b"><img src="img/obj/ball.webp" alt="" width="220" height="220" loading="lazy"><span>Sport</span><b>Kick Lab</b></li>
+          <li style="--c:#e0457b"><img src="img/obj/note.webp" alt="" width="220" height="220" loading="lazy"><span>Music</span><b>Beat Lab</b></li>
+        </ul>
+        <span class="cap team-cap">The team</span>
+        <div class="team">
+          <figure><img src="img/team/oliver.jpg" alt="Oliver Ramirez" width="360" height="450" loading="lazy"><figcaption><b>Oliver Ramirez</b><span>Co-Founder and CEO of DeltaOps, Head of Automation</span></figcaption></figure>
+          <figure><img src="img/team/arpan.jpg" alt="Arpan Bakshi" width="360" height="450" loading="lazy"><figcaption><b>Arpan Bakshi</b><span>Co-Founder of DeltaOps Learning, Head of Agentic Architecture</span></figcaption></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 · Contact -->
+<section class="band close" id="contact">
+  <div class="stars" aria-hidden="true"></div>
+  <div class="wrap close-grid">
+    <div>
+      <p class="eyebrow reveal">Start a conversation</p>
+      <h2 class="reveal">What could this become <span class="soft">for your organisation?</span></h2>
+      <p class="close-sub reveal">Tell us who you work with, what you already teach or deliver, and where AI could add value. We will explore whether an existing experience fits or whether it makes sense to create something new.</p>
+      <div class="cta-row reveal">
+        <a class="btn light" data-contact href="mailto:hello@deltatraining.co?subject=Delta%20Learning%20partnership%20call&amp;body=Who%20we%20work%20with%3A%0A%0AWhat%20we%20already%20teach%20or%20deliver%3A%0A%0AWhere%20AI%20could%20add%20value%3A%0A">Book a partnership call <svg class="arr" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn ghost light" href="#experiences">Show me examples</a>
+      </div>
+      <p class="direct reveal">Or email us directly at <a href="mailto:hello@deltatraining.co">hello@deltatraining.co</a></p>
+    </div>
+    <div class="steps reveal">
+      <img class="steps-bot" src="img/obj/bot.webp" alt="" width="320" height="320" loading="lazy">
+      <span class="cap">What happens next</span>
+      <ol>
+        <li><span>1</span>A first call about your audience, goals and setting.</li>
+        <li><span>2</span>A recommendation: license, customise or co-create.</li>
+        <li><span>3</span>A pilot plan with success criteria we agree together.</li>
+      </ol>
+      <p class="steps-note">You do not need a finished brief. A rough idea of who you work with is enough to start.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <img src="assets/logo-learning-white.svg" alt="DeltaOps Learning" width="190" height="24" loading="lazy">
+    <nav aria-label="Footer">
+      <a href="#platform">Platform</a><a href="#experiences">Experiences</a><a href="#use-cases">Use cases</a><a href="#safety">Safety</a><a href="#how-we-work">How we work</a><a href="#about">About</a><a href="#contact">Contact</a>
+    </nav>
+    <p>Delta Learning is built by the team behind <a href="https://deltaops.consulting" target="_blank" rel="noopener">DeltaOps</a>.</p>
+  </div>
+  <div class="wrap foot-base">
+    <p>&copy; 2026 Delta Learning &middot; deltalearning.co</p>
+    <p>This site uses no cookies or tracking.</p>
+  </div>
+</footer>
+
+<script src="js/site.js" defer></script>
+<script type="module" src="js/game/main.js"></script>
+</body>
+</html>

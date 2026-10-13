@@ -138,8 +138,6 @@ h1 .hl { position:relative; -webkit-box-decoration-break:clone; box-decoration-b
 .gw-pause[aria-pressed="true"] svg { fill:var(--ink); stroke-width:1.5; }
 .note { position:absolute; z-index:4; pointer-events:none; font:800 13px/1 var(--sans); color:var(--ink); background:var(--sun); padding:8px 11px; border-radius:10px; box-shadow:0 3px 0 rgba(0,0,0,.14); rotate:-4deg; opacity:0; transition:opacity .5s, translate .5s var(--pop); translate:0 8px; }
 .note::after { content:""; position:absolute; width:26px; height:20px; border:2.5px solid var(--ink); border-color:var(--ink) transparent transparent var(--ink); border-radius:50% 0 0 0; }
-.note.n1 { left:6px; top:-46px; }
-.note.n1::after { left:22px; top:30px; rotate:-20deg; }
 .note.n2 { left:-86px; top:96px; background:#fff; rotate:3deg; }
 .note.n2::after { right:-22px; top:24px; rotate:150deg; }
 .note.n3 { right:150px; top:-46px; background:var(--mint); rotate:4deg; }

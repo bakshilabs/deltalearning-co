@@ -1,6 +1,6 @@
 # Delta Learning
 
-The website for [deltalearning.co](https://deltalearning.co): white-label AI learning experiences for organisations that work with children.
+The website for [deltalearning.co](https://deltalearning.co): safe, game-based AI learning for organisations that work with children.
 
 A static site with no build step and no third-party requests. Fonts and libraries are self-hosted, and there are no cookies, analytics or trackers.
 

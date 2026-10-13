@@ -1,4 +1,4 @@
-// Wires the games into the page: the hero player, the live worlds in the hub and the Eco Town demo.
+// Wires the games into the page: the hero player, the example worlds and the Eco Town demo.
 import { hub, View } from './engine.js';
 import { WORLDS } from './worlds.js';
 import { Hud, Trailer } from './hud.js';
@@ -8,38 +8,34 @@ const reduce = hub.reduce;
 const idle = fn => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 1500 }) : setTimeout(fn, 300));
 document.documentElement.classList.add('games');
 
-/* ======================= hero: one engine, four partner brands ======================= */
-const ORDER = ['eco', 'stem', 'camp', 'museum'];
-const DESC = {
-  eco: 'Fictional example: Eco AI Explorer, for a nature centre. Children design a pond. Asked to make it “nice”, the AI helper cuts the reeds and the wildlife leaves. A clearer card adds a boardwalk and the wildlife returns.',
-  stem: 'Fictional example: AI Inventor Lab, for a STEM club. Children program a rover. “As fast as you can” gets it stuck in soft sand. Wide wheels and a slower speed get it to the crater, and children correct a camera label the AI got wrong.',
-  camp: 'Fictional example: Mission AI, for a holiday camp. A team votes on a route to the lighthouse. The AI takes “quickest” to mean straight over the ridge and the team tires. A second vote follows the river and they arrive before sunset.',
-  museum: 'Fictional example: AI Time Traveller, for a museum. Asked what Romans ate, the AI plans a feast. Children ask a sharper question and check evidence from the wharf, the bakery and the river bank.'
-};
-function heroPlayer() {
-  const el = document.querySelector('[data-hero-game]');
-  if (!el) return null;
+/* ======================= players: a partner game playing its trailer =======================
+   The hero plays one brand on a loop. The worlds section plays whichever example tab is chosen. */
+function player(el, { tabs = [], onShow = null, ambient = false } = {}) {
+  const keys = el.dataset.player.split(' ');
   const playArea = el.closest('.hero-play');
-  const tabs = [...document.querySelectorAll('[data-tab]')];
-  const desc = document.querySelector('[data-hero-desc]');
-  const pauseBtn = el.querySelector('[data-pause]');
+  const pauseBtn = el.parentElement.querySelector('[data-pause]');
   const games = {};
-  let cur = null, phase = 'idle', phaseT = 0, idx = 0;
+  let cur = null, phase = 'idle', phaseT = 0, want = keys[0];
+  const mark = key => {
+    el.dataset.brand = key;
+    tabs.forEach(t => { const on = t.dataset.key === key; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
+    if (onShow) onShow(key);
+  };
   const view = new View(el, { maxDpr: 2, onUpdate: t => step(t) });
   if (!view.ok) {
     // no WebGL: show a still of each game instead
-    el.classList.add('nogl'); el.querySelector('[data-pause]').hidden = true;
-    const still = key => { el.style.setProperty('--poster', `url(/img/game/poster-${key}.webp)`); el.dataset.brand = key; tabs.forEach(t => t.setAttribute('aria-pressed', String(t.dataset.tab === key))); desc.textContent = DESC[key]; };
-    tabs.forEach(t => t.addEventListener('click', () => still(t.dataset.tab)));
-    still('eco');
-    return { show: still };
+    el.classList.add('nogl'); if (pauseBtn) pauseBtn.hidden = true;
+    const still = key => { el.style.setProperty('--poster', `url(/img/game/poster-${key}.webp)`); mark(key); };
+    tabs.forEach(t => t.addEventListener('click', () => still(t.dataset.key)));
+    still(keys[0]);
+    return;
   }
 
   function game(key) {
     if (!games[key]) {
       const b = BRANDS[key], world = WORLDS[b.world]();
       const root = document.createElement('div');
-      el.insertBefore(root, el.querySelector('.gw-fic'));
+      el.appendChild(root);
       root.hidden = true;
       const hud = new Hud(root, b);
       const spec = TRAILERS[b.world](world, view);
@@ -52,20 +48,20 @@ function heroPlayer() {
   function show(key) {
     const g = game(key);
     if (cur && cur !== g) { cur.hud.clear(); cur.root.hidden = true; }
-    cur = g; idx = ORDER.indexOf(key);
-    el.dataset.brand = key;
+    cur = g; want = key;
+    mark(key);
     g.root.hidden = false;
     g.world.camOverride = null; g.world.snapCam();
-    tabs.forEach(t => { t.setAttribute('aria-pressed', String(t.dataset.tab === key)); t.querySelector('i').style.width = '0%'; });
-    desc.textContent = DESC[key];
     view.setWorld(g.world);
     el.classList.add('ready');
+    if (ambient) return still(g);
     if (reduce || view.paused) return poster(g);
     g.hud.clear();
     if (first) { first = false; g.world.finish(); phase = 'build'; phaseT = view.t - .6; }
     else { g.world.build(); phase = 'build'; phaseT = view.t; }
-    // build the next world while this one plays
-    idle(() => game(ORDER[(idx + 1) % ORDER.length]));
+    // build the next tab's world while this one plays
+    const next = keys[(keys.indexOf(key) + 1) % keys.length];
+    if (next !== key) idle(() => game(next));
   }
   // jump straight to a finished moment (reduced motion, or a tab chosen while paused)
   function poster(g) {
@@ -77,58 +73,70 @@ function heroPlayer() {
     hub.drawStill(view);
     requestAnimationFrame(() => requestAnimationFrame(() => g.root.classList.remove('instant')));
   }
+  // phones: a calm, finished world that drifts slowly, showing only the brand and the mission,
+  // so the hero does not compete with the real demo below it
+  function still(g) {
+    g.tr.seek(1, view.t);
+    if (BRANDS[g.key].world === 'pond') g.world.setState('wild', true);
+    g.world.cam = { ...g.world.cam, sway: .22 };
+    g.world.finish();
+    phase = 'held';
+    view.refresh();
+  }
+  // at the end of a play-through, take the world down and build it again
   function leave() { phase = 'out'; phaseT = view.t; cur.hud.clear(); cur.world.unbuild(); }
   function step(t) {
     if (!cur) return;
-    if (phase === 'build' && t - phaseT > 1.25) { phase = 'play'; cur.tr.start(t); playArea.classList.add('noted'); }
-    else if (phase === 'play') {
-      cur.tr.update(t);
-      const bar = tabs[idx] && tabs[idx].querySelector('i');
-      if (bar) bar.style.width = Math.min(100, (t - cur.tr.loopStart) / cur.tr.length * 100) + '%';
-    } else if (phase === 'out' && t - phaseT > .85) show(ORDER[(idx + 1) % ORDER.length]);
+    if (phase === 'build' && t - phaseT > 1.25) { phase = 'play'; cur.tr.start(t); if (playArea) playArea.classList.add('noted'); }
+    else if (phase === 'play') cur.tr.update(t);
+    else if (phase === 'out' && t - phaseT > .85) show(want);
   }
-  tabs.forEach(t => t.addEventListener('click', () => show(t.dataset.tab)));
-  pauseBtn.addEventListener('click', () => {
-    const p = !view.paused;
-    view.pause(p);
-    el.classList.toggle('paused', p);
-    pauseBtn.setAttribute('aria-pressed', String(p));
-    pauseBtn.querySelector('use').setAttribute('href', p ? '#i-play' : '#i-pause');
-    pauseBtn.querySelector('.sr').textContent = p ? 'Play the game preview' : 'Pause the game preview';
-  });
-  if (reduce) pauseBtn.hidden = true;
-  show('eco');
-  return { show };
-}
-const hero = heroPlayer();
-
-/* ======================= hub: each partner world, live ======================= */
-function miniWorlds() {
-  const els = [...document.querySelectorAll('[data-mini]')];
-  const start = el => {
-    if (el.dataset.on) return; el.dataset.on = '1';
-    idle(() => {
-      const b = BRANDS[el.dataset.mini], world = WORLDS[b.world]();
-      world.cam = { ...world.cam, sway: .22, dist: world.cam.dist * 1.02 };
-      const view = new View(el, { maxDpr: 1.5 });
-      if (!view.ok) { el.classList.add('nogl'); return; }
-      if (world.setState && b.world === 'pond') world.setState('wild', true);
-      if (b.world === 'rome') world.setState('evidence', true);
-      view.t = Math.random() * 20;
-      view.setWorld(world);
-      el.classList.add('ready');
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => { if (t.dataset.key !== cur.key) show(t.dataset.key); });
+    t.addEventListener('keydown', e => {
+      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!d) return;
+      e.preventDefault();
+      const n = tabs[(i + d + tabs.length) % tabs.length];
+      n.focus(); n.click();
     });
-  };
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { start(e.target); io.unobserve(e.target); } }), { rootMargin: '400px 0px' });
-    els.forEach(el => io.observe(el));
-  } else els.forEach(start);
-  document.querySelectorAll('[data-watch]').forEach(b => b.addEventListener('click', () => {
-    document.getElementById('top').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
-    if (hero) hero.show(b.dataset.watch);
-  }));
+  });
+  if (pauseBtn) {
+    pauseBtn.addEventListener('click', () => {
+      const p = !view.paused;
+      view.pause(p);
+      el.classList.toggle('paused', p);
+      pauseBtn.setAttribute('aria-pressed', String(p));
+      pauseBtn.querySelector('use').setAttribute('href', p ? '#i-play' : '#i-pause');
+      pauseBtn.querySelector('.sr').textContent = p ? 'Play the game preview' : 'Pause the game preview';
+    });
+    if (reduce) pauseBtn.hidden = true;
+  }
+  show(keys[0]);
 }
-miniWorlds();
+
+// hero: one partner game on a loop
+const heroEl = document.querySelector('.hero [data-player]');
+if (heroEl) player(heroEl, { ambient: matchMedia('(max-width: 640px)').matches });
+
+// worlds: three example partners in one component, built when it comes near the screen
+const worldsEl = document.querySelector('[data-worlds]');
+if (worldsEl) {
+  const tabs = [...worldsEl.querySelectorAll('[role="tab"]')];
+  const panel = worldsEl.querySelector('[role="tabpanel"]');
+  const copies = [...worldsEl.querySelectorAll('[data-copy]')];
+  const start = () => player(worldsEl.querySelector('[data-player]'), {
+    tabs,
+    onShow: key => {
+      copies.forEach(c => c.classList.toggle('on', c.dataset.copy === key));
+      panel.setAttribute('aria-labelledby', 'ws-t-' + key);
+    }
+  });
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { io.disconnect(); idle(start); } }, { rootMargin: '500px 0px' });
+    io.observe(worldsEl);
+  } else start();
+}
 
 /* ======================= the Eco Town demo ======================= */
 const SOLAR = [0, 0, 0, 0, 0, 0, 2, 10, 22, 36, 48, 58, 64, 66, 62, 54, 42, 28, 12, 2, 0, 0, 0, 0];
@@ -194,10 +202,13 @@ function demo() {
   const view = new View(gameEl, { maxDpr: 2 });
   if (view.ok) { view.setWorld(world); gameEl.classList.add('ready'); } else gameEl.classList.add('nogl');
   let tried = [], cur = -1, sweep = 0;
+  const phone = () => getComputedStyle($('.chart')).display === 'none';
 
+  // the page shows four steps: the response counts as part of the choice, the outcome as part of rethinking
   const setFlow = stepName => {
-    const i = ['mission', 'decision', 'response', 'consequence', 'iterate', 'outcome'].indexOf(stepName);
-    flow.forEach((li, k) => { li.classList.toggle('on', k === i); li.classList.toggle('done', k < i); });
+    const i = ['mission', 'decision', 'decision', 'consequence', 'iterate', 'iterate'][['mission', 'decision', 'response', 'consequence', 'iterate', 'outcome'].indexOf(stepName)];
+    const k0 = ['mission', 'decision', 'consequence', 'iterate'].indexOf(i);
+    flow.forEach((li, k) => { li.classList.toggle('on', k === k0); li.classList.toggle('done', k < k0); });
   };
   setFlow('mission');
 
@@ -243,6 +254,10 @@ function demo() {
     cur = k; const r = RESULTS[k];
     cards.forEach((c, j) => c.setAttribute('aria-pressed', String(j === k)));
     cardWrap.classList.add('busy'); outc.hidden = true; res.hidden = true;
+    if (phone()) {
+      const top = gameEl.getBoundingClientRect().top, navH = 80;
+      if (top < navH || top > innerHeight * .4) scrollBy({ top: top - navH, behavior: reduce ? 'auto' : 'smooth' });
+    }
     if (howto) howto.hidden = true; if (chartEmpty) chartEmpty.hidden = true; if (paths) paths.hidden = true;
     setFlow('decision');
     $('[data-pick]').textContent = 'Running a test day with your card…';
@@ -261,7 +276,6 @@ function demo() {
   }
   function done(k) {
     const p = PLANS[k], r = RESULTS[k];
-    $('[data-says]').textContent = p.says;
     $('[data-tag]').textContent = p.tag;
     $('[data-assumed]').textContent = p.assumed;
     $('[data-effect]').textContent = p.effect(r);
@@ -270,7 +284,8 @@ function demo() {
     meter('people', r.people); meter('planet', r.planet);
     res.hidden = false; cardWrap.classList.remove('busy');
     range.disabled = false; range.value = 19;
-    $('[data-pick]').textContent = 'Drag the time slider to see any hour of the test day.';
+    // phones hide the chart and its slider, so point them at the next step instead
+    $('[data-pick]').textContent = phone() ? 'Read what the AI guessed, then try another card.' : 'Drag the time slider to see any hour of the test day.';
     setFlow('consequence');
     setTimeout(() => setFlow('iterate'), reduce ? 0 : 1400);
     if (!tried.includes(k)) tried.push(k);
@@ -284,6 +299,7 @@ function demo() {
       pathList.appendChild(li);
     });
     pathBox.hidden = false;
+    if (phone()) res.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
   }
   cards.forEach((c, k) => c.addEventListener('click', () => choose(k)));
   range.addEventListener('input', () => setHour(+range.value));

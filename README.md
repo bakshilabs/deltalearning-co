@@ -9,14 +9,14 @@ A static site with no build step and no third-party requests. Fonts and librarie
 - `index.html`: the homepage (single page, anchored sections)
 - `css/site.css`: page styles. Display type is Bricolage Grotesque, text is Inter, and the brand colours are the DeltaOps navy and the blue to green gradient.
 - `css/game.css`: the game windows and their on-screen interface (HUD). Everything inside a game uses Inter.
-- `js/site.js`: page behaviour (nav, reveals, the level map, the hub wires)
+- `js/site.js`: page behaviour (nav, mobile menu, scroll progress, reveals)
 - `js/game/engine.js`: a small voxel engine on three.js. One WebGL renderer draws every game window on the page, with soft shadows, baked ambient occlusion and a block-by-block build animation.
 - `js/game/worlds.js`: the five worlds: a pond habitat, a rover on Mars, an island expedition, Roman Londinium and Eco Town
 - `js/game/hud.js` and `js/game/trailers.js`: the game interface and the scripted play-throughs for the four fictional partner brands
-- `js/game/main.js`: wires the hero player, the live worlds in the hub and the playable Eco Town demo
+- `js/game/main.js`: wires the hero player, the tabbed example worlds and the playable Eco Town demo
 - `js/vendor/three.module.min.js`: three.js r160 (MIT)
 - `img/game/`: stills of each world, used as placeholders while the 3D loads and as a fallback without WebGL
-- `img/photo/`: generated photography (1600 and 800 wide)
+- `img/photo/`: generated photography (1600 and 800 wide), not used on the current homepage
 - `img/og.jpg`: the social sharing image (1200 × 630)
 - `404.html`: catches old links such as `/deck/` and `/kids/`
 - `assets/`: the logo, the favicon mark and fonts

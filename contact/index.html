@@ -58,9 +58,11 @@
   </header>
 
   <main>
-    <span class="eyebrow">Talk to us about a pilot</span>
-    <h1>Could one of these labs work <span>for your children?</span></h1>
-    <p class="lede">Tell us who you work with, what you already offer and the topic you would like to explore. We will reply to arrange a call.</p>
+    <div id="intro">
+      <span class="eyebrow">Talk to us about a pilot</span>
+      <h1>Could one of these labs work <span>for your children?</span></h1>
+      <p class="lede">Tell us who you work with, what you already offer and the topic you would like to explore. We will reply to arrange a call.</p>
+    </div>
 
     <form id="form" action="https://formsubmit.co/arpanbakshi@outlook.com" method="POST">
       <input type="hidden" name="_subject" value="Pilot enquiry from deltaopslearning.com">
@@ -92,6 +94,7 @@
 </div>
 <script>
   if (new URLSearchParams(location.search).has('sent')) {
+    document.getElementById('intro').hidden = true;
     document.getElementById('form').hidden = true;
     document.getElementById('done').hidden = false;
   }

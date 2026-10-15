@@ -342,8 +342,6 @@ h1 .hl { position:relative; -webkit-box-decoration-break:clone; box-decoration-b
 .close-sub { color:#cfdcf2; font-size:19px; max-width:52ch; }
 .close .cta-row { justify-content:center; }
 .close-bot { width:118px; height:auto; margin-bottom:-4px; animation:bob 4.5s ease-in-out infinite; filter:drop-shadow(0 20px 20px rgba(0,0,0,.4)); }
-.direct { font-size:15px; color:#9fb3d9; }
-.direct a { color:#fff; font-weight:700; }
 
 /* ---------- footer ---------- */
 .foot { background:#081022; color:#9fb3c9; padding:44px 0 30px; font-size:14.5px; }

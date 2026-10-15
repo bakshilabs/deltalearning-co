@@ -1,6 +1,6 @@
 # Delta Learning
 
-The website for [deltalearning.co](https://deltalearning.co): safe, game-based AI learning for organisations that work with children.
+The website for [deltaopslearning.com](https://deltaopslearning.com): safe, game-based AI learning for organisations that work with children.
 
 A static site with no build step and no third-party requests. Fonts and libraries are self-hosted, and there are no cookies, analytics or trackers.
 
@@ -38,6 +38,6 @@ Then open http://localhost:8000. The site uses root-relative image paths, so ser
 
 ## Publishing
 
-GitHub Pages serves `main` at https://deltalearning.co (see `CNAME`). Pushing to `main` deploys in about a minute.
+GitHub Pages serves `main` at https://deltaopslearning.com (see `CNAME`). Pushing to `main` deploys in about a minute.
 
 The previous site (the AI Lab landing page) is kept on the `archive/ai-lab-landing` branch and the `archive-ai-lab-landing-2026-10-10` tag.

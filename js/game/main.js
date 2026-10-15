@@ -26,7 +26,7 @@ function player(el, { tabs = [], onShow = null, ambient = false } = {}) {
     // no WebGL: show a still of each game instead
     el.classList.add('nogl'); if (pauseBtn) pauseBtn.hidden = true;
     const still = key => { el.style.setProperty('--poster', `url(/img/game/poster-${key}.webp)`); mark(key); };
-    tabs.forEach(t => t.addEventListener('click', () => still(t.dataset.key)));
+    tabs.forEach(t => t.addEventListener('click', () => { if (!t.dataset.frame) still(t.dataset.key); }));
     still(keys[0]);
     return;
   }
@@ -92,7 +92,8 @@ function player(el, { tabs = [], onShow = null, ambient = false } = {}) {
     else if (phase === 'out' && t - phaseT > .85) show(want);
   }
   tabs.forEach((t, i) => {
-    t.addEventListener('click', () => { if (t.dataset.key !== cur.key) show(t.dataset.key); });
+    // a tab with data-frame shows the real club app in a frame instead (handled by the worlds section)
+    t.addEventListener('click', () => { if (t.dataset.frame) return; if (t.dataset.key !== cur.key) show(t.dataset.key); else mark(t.dataset.key); });
     t.addEventListener('keydown', e => {
       const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
       if (!d) return;
@@ -113,6 +114,7 @@ function player(el, { tabs = [], onShow = null, ambient = false } = {}) {
     if (reduce) pauseBtn.hidden = true;
   }
   show(keys[0]);
+  return { pause: p => { if (!pauseBtn || pauseBtn.getAttribute('aria-pressed') !== 'true') view.pause(p); } };
 }
 
 // hero: one partner game on a loop
@@ -125,13 +127,52 @@ if (worldsEl) {
   const tabs = [...worldsEl.querySelectorAll('[role="tab"]')];
   const panel = worldsEl.querySelector('[role="tabpanel"]');
   const copies = [...worldsEl.querySelectorAll('[data-copy]')];
-  const start = () => player(worldsEl.querySelector('[data-player]'), {
-    tabs,
-    onShow: key => {
-      copies.forEach(c => c.classList.toggle('on', c.dataset.copy === key));
-      panel.setAttribute('aria-labelledby', 'ws-t-' + key);
-    }
-  });
+  const gw = worldsEl.querySelector('[data-player]');
+  const frameBox = worldsEl.querySelector('.ws-frame');
+  const frame = frameBox && frameBox.querySelector('iframe');
+  let ctl = null;
+  const showCopy = key => {
+    copies.forEach(c => c.classList.toggle('on', c.dataset.copy === key));
+    panel.setAttribute('aria-labelledby', 'ws-t-' + key);
+  };
+  // the Game Lab tab plays the real Platform Game from the club app, in a frame
+  const capText = worldsEl.querySelector('.gw-cap > span');
+  const capPause = worldsEl.querySelector('.gw-cap [data-pause]');
+  const capWas = capText ? capText.textContent : '';
+  // while the Game Lab frame shows, the pause button pauses the frame
+  let frameHeld = false, viewIcon = null;
+  const setIcon = (held, what) => {
+    capPause.setAttribute('aria-pressed', String(held));
+    capPause.querySelector('use').setAttribute('href', held ? '#i-play' : '#i-pause');
+    capPause.querySelector('.sr').textContent = (held ? 'Play ' : 'Pause ') + what;
+  };
+  if (capPause) capPause.addEventListener('click', e => {
+    if (!frameBox || frameBox.hidden) return;
+    e.stopImmediatePropagation();
+    frameHeld = !frameHeld;
+    setIcon(frameHeld, 'the Game Lab preview');
+    if (frame.contentWindow) frame.contentWindow.postMessage(frameHeld ? 'pause' : 'play', location.origin);
+  }, true);
+  const hideFrame = () => {
+    if (!frameBox || frameBox.hidden) return;
+    frameBox.hidden = true; gw.hidden = false;
+    if (capText) capText.textContent = capWas;
+    if (capPause && viewIcon) { setIcon(viewIcon.held, 'the game preview'); viewIcon = null; }
+    if (frame.contentWindow) frame.contentWindow.postMessage('pause', location.origin);
+    if (ctl) ctl.pause(false);
+  };
+  tabs.forEach(t => t.addEventListener('click', () => {
+    if (!t.dataset.frame) { hideFrame(); return; }
+    tabs.forEach(b => { const on = b === t; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
+    showCopy(t.dataset.key);
+    if (!frame.getAttribute('src')) frame.src = t.dataset.frame;
+    else if (frame.contentWindow) frame.contentWindow.postMessage('play', location.origin);
+    frameBox.hidden = false; gw.hidden = true;
+    if (capText) capText.textContent = 'The Platform Game mission, showing builds chosen at random.';
+    if (capPause && !viewIcon) { viewIcon = { held: capPause.getAttribute('aria-pressed') === 'true' }; frameHeld = false; setIcon(false, 'the Game Lab preview'); }
+    if (ctl) ctl.pause(true);
+  }));
+  const start = () => { ctl = player(gw, { tabs, onShow: showCopy }); };
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { io.disconnect(); idle(start); } }, { rootMargin: '500px 0px' });
     io.observe(worldsEl);
@@ -144,24 +185,24 @@ const WIND = [36, 38, 38, 37, 36, 35, 36, 30, 27, 25, 24, 24, 25, 26, 26, 24, 20
 const DEMAND = [26, 24, 23, 23, 24, 28, 36, 40, 44, 38, 36, 36, 38, 37, 36, 38, 42, 44, 58, 64, 60, 42, 34, 30];
 const PLANS = [
   { key: 'A', card: 'Keep the lights on all night', gasNight: 20, gas: true,
-    says: 'Easy: the gas plant can run every night, so the lights will never go out.',
-    tag: 'AI guessed', assumed: 'You did not say how, so it runs the gas plant every night.',
-    effect: r => `Gas every night, so ${r.co2} kg of CO₂ a day`,
-    tradeoff: 'Every home has light all night. The town now burns gas every evening, even when the wind could do the job.',
+    says: 'The gas plant runs every night to keep the lights on.',
+    tag: 'AI guessed', assumed: 'You did not say how to keep the lights on, so it runs the gas plant every night.',
+    effect: r => `Burning gas each night releases ${r.co2} kg of CO₂ (carbon dioxide) a day`,
+    tradeoff: 'The lights stay on all night. The town burns gas every evening, even when the wind could supply enough power.',
     facil: 'You asked for the lights to stay on. Did you say how? What could you add to your card?',
     power: '6 turbines, solar on 20 roofs, and gas every night' },
   { key: 'B', card: 'Use only wind and sun, nothing else',
-    says: 'I used only the turbines and the solar panels, like you said. Nothing stores spare power for later.',
+    says: 'I used only wind turbines and solar panels, as you asked. There is no battery to store spare power for later.',
     tag: 'AI guessed', assumed: 'No battery, because you did not ask for one.',
     effect: r => `The wind drops in the evening, so the lights go out from ${r.outFrom} to ${r.outTo}`,
-    tradeoff: 'No gas at all, but homes go dark just as families get home.',
-    facil: 'The town is clean. So why are people unhappy at 19:00? What could store the midday sun?',
+    tradeoff: 'The town burns no gas, but homes go dark in the evening.',
+    facil: 'The town burns no gas. Why are people unhappy at 19:00? What could store spare power from the solar panels?',
     power: '6 turbines and solar on 20 roofs' },
   { key: 'C', card: 'Add a battery, and keep gas under 10% of the power', cap: 80, gas: true,
-    says: 'I added a battery to store spare power from the middle of the day. The gas plant only runs if the battery runs out, and never for more than 10% of the power.',
-    tag: 'AI guessed', assumed: 'A medium battery, 80 kWh. You set the gas limit, so it keeps to it.',
-    effect: r => `A battery keeps the lights on all night, with gas at ${r.gasPct}%`,
-    tradeoff: 'The lights stay on and your limit is kept. The battery costs money and needs mined metals.',
+    says: 'I added a battery to store spare power for later. The gas plant runs when the battery cannot supply enough power. In this test day, gas supplies less than 10% of the power.',
+    tag: 'AI guessed', assumed: 'A battery that stores 80 kilowatt-hours (kWh) of energy. You did not choose its size.',
+    effect: r => `The lights stay on all night. Gas supplies ${r.gasPct}% of the day's power.`,
+    tradeoff: 'The lights stay on. Gas stays below your limit in this test day. The battery costs money and needs metals from mines.',
     facil: 'The AI chose the battery size. Would a bigger one be better? How would you test it fairly?',
     power: '6 turbines, solar on 20 roofs and an 80 kWh battery' }
 ];
@@ -260,7 +301,7 @@ function demo() {
     }
     if (howto) howto.hidden = true; if (chartEmpty) chartEmpty.hidden = true; if (paths) paths.hidden = true;
     setFlow('decision');
-    $('[data-pick]').textContent = 'Running a test day with your card…';
+    $('[data-pick]').textContent = 'Testing your card over one day…';
     range.disabled = true;
     cancelAnimationFrame(sweep);
     setTimeout(() => setFlow('response'), reduce ? 0 : 350);
@@ -285,7 +326,7 @@ function demo() {
     res.hidden = false; cardWrap.classList.remove('busy');
     range.disabled = false; range.value = 19;
     // phones hide the chart and its slider, so point them at the next step instead
-    $('[data-pick]').textContent = phone() ? 'Read what the AI guessed, then try another card.' : 'Drag the time slider to see any hour of the test day.';
+    $('[data-pick]').textContent = phone() ? 'Read what the AI guessed, then try another card.' : 'Move the time slider to see what happens at each hour.';
     setFlow('consequence');
     setTimeout(() => setFlow('iterate'), reduce ? 0 : 1400);
     if (!tried.includes(k)) tried.push(k);
@@ -305,7 +346,7 @@ function demo() {
   range.addEventListener('input', () => setHour(+range.value));
   $('[data-again]').addEventListener('click', () => {
     res.hidden = true; cards.forEach(c => c.setAttribute('aria-pressed', 'false'));
-    $('[data-pick]').textContent = 'Pick another card. Different choices create different outcomes.';
+    $('[data-pick]').textContent = 'Try another card to see how the town changes.';
     setFlow('iterate'); cards[0].focus();
   });
   $('[data-keep]').addEventListener('click', () => {
@@ -316,7 +357,7 @@ function demo() {
     const dl = $('[data-outcome-list]'); dl.innerHTML = '';
     rows.forEach(([a, b]) => { const d = document.createElement('div'); d.innerHTML = '<dt></dt><dd></dd>'; d.children[0].textContent = a; d.children[1].textContent = b; dl.appendChild(d); });
     outc.hidden = false; setFlow('outcome');
-    $('[data-pick]').textContent = 'Plan kept. In a full session, the child explains why.';
+    $('[data-pick]').textContent = 'You chose to keep this plan. In a full session, the child explains their choice.';
   });
   $('[data-restart]').addEventListener('click', () => {
     tried = []; cur = -1;

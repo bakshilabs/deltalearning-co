@@ -31,20 +31,20 @@ function pond(W, view) {
       [1.9, h => h.setCards(cardsA, { label: 'Tell the AI helper what to do' })],
       [3.0, h => h.point(h.card(0))],
       [3.8, h => { h.tap(); h.pick(0); }],
-      [4.4, h => { h.hideCards(); h.unpoint(); h.say('“Nice” sounds like neat. Cutting the reeds, adding a gravel path and a deck.', { conf: 64 }); }],
+      [4.4, h => { h.hideCards(); h.unpoint(); h.say('I took “nice” to mean tidy. I’ll cut the reeds and add a gravel path and a deck.', { conf: 64 }); }],
       [5.0, (h, w) => { w.setState('nice'); w.camOverride = close; }],
       [6.8, h => { h.meters([{ key: 'v', label: 'Visitors', icon: 'people' }, { key: 'w', label: 'Wildlife', icon: 'leaf' }]); journal = h.slot('journal', chips(SPECIES, 2, 'Species seen')); }],
       [7.1, h => { h.meter('v', 88, 1); h.meter('w', 41, -1); }],
       [8.2, h => h.pop('The ducks have left', 'bad')],
       [9.6, h => { h.unpop(); h.ask('You asked for “nice”. What did the AI think you meant?'); }],
-      [11.2, h => { h.hush(); h.hidePanel(); h.setCards(cardsA, { label: 'Try a clearer card' }); }],
+      [11.2, h => { h.hush(); h.hidePanel(); h.setCards(cardsA, { label: 'Choose a clearer instruction' }); }],
       [12.0, h => h.point(h.card(1))],
       [12.7, h => { h.tap(); h.pick(1); h.unask(); }],
       [13.2, (h, w) => { h.hideCards(); h.unpoint(); h.say('Building a boardwalk across the water. The reeds stay wild.', { chip: 'Plan', conf: 92, tone: 'check' }); w.setState('wild'); w.camOverride = bw; }],
       [14.8, h => { h.on(h.panel); h.meter('v', 82, -1); h.meter('w', 90, 1); }],
       ...[3, 4, 5, 6, 7].map((n, i) => [15.1 + i * .28, () => setChips(journal, n)]),
       [16.3, (h, w) => { w.camOverride = { ...bw, dist: 50, el: .5 }; }],
-      [16.6, h => { h.hush(); h.celebrate(3, 'Habitat plan saved', { badge: 'Badge unlocked: Wildlife friend', xp: 120 }); h.setStats(7, 1360); }],
+      [16.6, h => { h.hush(); h.celebrate(3, 'Habitat plan saved', { badge: 'Badge earned: Wildlife friend', xp: 120 }); h.setStats(7, 1360); }],
       [18.9, h => { h.uncelebrate(); h.hidePanel(); h.on(h.mission, false); }]
     ]
   };
@@ -92,12 +92,12 @@ function mars(W, view) {
     cues: [
       [.2, h => h.setStats(2, 860)],
       [.5, h => h.showMission('Drive the rover to the crater and send back a photo', 'L4')],
-      [1.4, h => { prog = h.extra('hd-prog', `<small class="hd-cap">Your program</small><div class="hd-code">${blk('When mission starts', '#ff8a3d', 'hat')}</div>`); const pr = prog; requestAnimationFrame(() => pr.classList.add('on')); }],
+      [1.4, h => { prog = h.extra('hd-prog', `<small class="hd-cap">Your programme</small><div class="hd-code">${blk('When mission starts', '#ff8a3d', 'hat')}</div>`); const pr = prog; requestAnimationFrame(() => pr.classList.add('on')); }],
       [2.0, h => h.setCards(cards, { label: 'Choose an instruction' })],
       [3.0, h => h.point(h.card(0))],
       [3.7, h => { h.tap(); h.pick(0); }],
       [4.1, h => { h.hideCards(); h.unpoint(); prog.querySelector('.hd-code').insertAdjacentHTML('beforeend', blk('drive <em>as fast as you can</em>', '#5b4cf0', 'new')); }],
-      [4.5, h => h.say('Fast means top speed, so I picked small, hard wheels.', { conf: 72 })],
+      [4.5, h => h.say('I took “fast” to mean top speed. I picked small, hard wheels.', { conf: 72 })],
       [5.0, (h, w) => { w.setState('fast'); w.camOverride = follow; }],
       [7.7, h => { h.pop('Stuck in soft sand', 'bad'); h.meters([{ key: 's', label: 'Speed', icon: 'bolt' }, { key: 'g', label: 'Grip', icon: 'gear' }]); }],
       [8.0, h => { h.meter('s', 92, 1); h.meter('g', 23, -1); }],
@@ -105,7 +105,7 @@ function mars(W, view) {
       [10.9, h => { h.hush(); h.hidePanel(); h.setCards(cards, { label: 'Change the instruction' }); }],
       [11.7, h => h.point(h.card(1))],
       [12.3, h => { h.tap(); h.pick(1); h.unask(); }],
-      [12.7, h => { h.hideCards(); h.unpoint(); const b = prog.querySelectorAll('.hd-blk')[1]; b.outerHTML = blk('drive <em>wide wheels, under 5 km/h</em>', '#5b4cf0', 'swap'); h.say('Wide wheels spread the weight. Driving slowly over the dunes.', { chip: 'Plan', conf: 90, tone: 'check' }); }],
+      [12.7, h => { h.hideCards(); h.unpoint(); const b = prog.querySelectorAll('.hd-blk')[1]; b.outerHTML = blk('drive <em>with wide wheels, under 5 km/h</em>', '#5b4cf0', 'swap'); h.say('Wide wheels spread the weight. Driving slowly over the dunes.', { chip: 'Plan', conf: 90, tone: 'check' }); }],
       [13.1, (h, w) => { w.setState('wide'); w.camOverride = { ...follow, dist: 84, az: .62 }; }],
       [14.6, (h, w) => {
         w.camOverride = { ...follow, dist: 84, az: .62, target: W.anchors.rover.clone().add(new W.anchors.rover.constructor(3, 0, 0)) };
@@ -116,7 +116,7 @@ function mars(W, view) {
         h.say('I can see two rocks and a crater ahead.', { chip: 'Camera', conf: 58 });
       }],
       [15.9, h => h.point(boxes.c)],
-      [16.5, h => { h.tap(); P.set(boxes.c, '<b>Shadow</b>', 'hd-vbox'); boxes.c.style.width = '4.4em'; boxes.c.style.height = '3.2em'; h.say('You checked it. That dark patch is a shadow, not a crater.', { chip: 'Fixed', tone: 'check', conf: 97 }); }],
+      [16.5, h => { h.tap(); P.set(boxes.c, '<b>Shadow</b>', 'hd-vbox'); boxes.c.style.width = '4.4em'; boxes.c.style.height = '3.2em'; h.say('You checked it. That dark patch is a shadow.', { chip: 'Fixed', tone: 'check', conf: 97 }); }],
       [17.1, h => { h.unpoint(); h.on(h.panel); h.meter('s', 54, -1); h.meter('g', 91, 1); }],
       [19.0, (h, w) => { Object.values(boxes).forEach(b => b.classList.remove('on')); w.camOverride = { ...follow, dist: 84, az: .62 }; w.scan(); }],
       [19.6, (h, w) => {
@@ -127,7 +127,7 @@ function mars(W, view) {
         cv.getContext('2d').drawImage(src, (src.width - sw) / 2, src.height * .34, sw, sh, 0, 0, 320, 200);
         requestAnimationFrame(() => ph.classList.add('on'));
       }],
-      [20.1, (h, w) => { h.hush(); h.hidePanel(); w.camOverride = { ...follow, dist: 50, el: .48, oy: .2 }; h.celebrate(3, '', { badge: 'Level 5 unlocked', xp: 130, style: 'gate' }); h.setStats(5, 990); }],
+      [20.1, (h, w) => { h.hush(); h.hidePanel(); w.camOverride = { ...follow, dist: 50, el: .48, oy: .2 }; h.celebrate(3, '', { badge: 'Level 5 reached', xp: 130, style: 'gate' }); h.setStats(5, 990); }],
       [22.4, h => { h.uncelebrate(); h.on(h.mission, false); }]
     ]
   };
@@ -170,11 +170,11 @@ function island(W, view) {
       [2.2, h => showVotes(h, 'Team vote: how do we get there?')],
       ...seq(2.8, [0, 1, 0, 0, 2, 0, 0, 1]),
       [5.0, () => result(0)],
-      [5.6, h => { hideVotes(); h.say('Quickest means shortest, so I sent you straight over the ridge.', { conf: 70 }); }],
+      [5.6, h => { hideVotes(); h.say('I took “quickest” to mean shortest. I sent you straight over the ridge.', { conf: 70 }); }],
       [6.1, (h, w) => { w.setState('quick'); w.camOverride = { target: W.anchors.team, dist: 72, el: .56, az: .78, oy: .02 }; }],
-      [9.6, h => { h.pop('Too steep. The team needs a rest', 'bad'); h.meters([{ key: 't', label: 'Time left', icon: 'clock' }, { key: 'e', label: 'Energy', icon: 'bolt' }]); }],
+      [9.6, h => { h.pop('The slope is too steep. The team needs a rest', 'bad'); h.meters([{ key: 't', label: 'Time left', icon: 'clock' }, { key: 'e', label: 'Energy', icon: 'bolt' }]); }],
       [9.9, h => { h.meter('t', 81); h.meter('e', 30, -1); }],
-      [11.0, h => { h.unpop(); h.ask('Shortest is not always quickest. What else matters?'); }],
+      [11.0, h => { h.unpop(); h.ask('The shortest route can take longer. What else matters?'); }],
       [12.4, h => { h.hush(); h.hidePanel(); showVotes(h, 'Vote again'); }],
       ...seq(12.9, [1, 1, 2, 1, 1, 1, 0, 1]),
       [14.9, () => result(1)],
@@ -182,7 +182,7 @@ function island(W, view) {
       [15.8, (h, w) => { w.setState('river'); w.camOverride = { target: W.anchors.team, dist: 76, el: .62, az: .55, oy: .02 }; }],
       [18.2, (h, w) => { h.on(h.panel); h.meter('t', 64, -1); h.meter('e', 86, 1); w.camOverride = { target: W.anchors.lighthouse, dist: 100, el: .5, az: .62, oy: .06 }; }],
       [20.9, (h, w) => { w.camOverride = { target: W.anchors.team, dist: 52, el: .45, az: .7, oy: .2 }; }],
-      [21.2, h => { h.hush(); h.hidePanel(); h.celebrate(3, 'Expedition map saved', { badge: 'Otters move up to 1st', xp: 120, style: 'confetti' }); h.setStats(6, 760); score.Otters = 510; drawBoard(); }],
+      [21.2, h => { h.hush(); h.hidePanel(); h.celebrate(3, 'Expedition map saved', { badge: 'Otters take first place', xp: 120, style: 'confetti' }); h.setStats(6, 760); score.Otters = 510; drawBoard(); }],
       [23.2, h => { h.uncelebrate(); }]
     ]
   };
@@ -198,8 +198,8 @@ const ART = {
 function rome(W, view) {
   const P = pinner(view);
   let arts = null;
-  const cards = ['Show them what Romans ate', 'Find what a dock worker had for lunch', 'Compare a rich family’s dinner with a street stall'];
-  const ITEMS = [['amphora', 'Amphora'], ['bread', 'Bread'], ['shell', 'Oysters'], ['coin', 'Coin']];
+  const cards = ['Show what Romans ate', 'Find what a dock worker had for lunch', 'Compare a rich family’s dinner with food from a street stall'];
+  const ITEMS = [['amphora', 'Amphora (storage jar)'], ['bread', 'Bread'], ['shell', 'Oysters'], ['coin', 'Coin']];
   const got = n => arts && arts.querySelectorAll('.hd-art').forEach((a, i) => a.classList.toggle('got', i < n));
   return {
     length: 21.5, poster: 18.4,
@@ -207,27 +207,27 @@ function rome(W, view) {
     frame: () => P.frame(),
     cues: [
       [.2, h => h.setStats(5, 1520)],
-      [.5, h => h.showMission('Plan a day in Londinium for a traveller arriving by boat', 'Room 3')],
+      [.5, h => h.showMission('Plan a day in Londinium, Roman London, for a traveller arriving by boat', 'Room 3')],
       [1.9, h => h.setCards(cards, { label: 'Ask the AI helper' })],
       [3.0, h => h.point(h.card(0))],
       [3.7, h => { h.tap(); h.pick(0); }],
-      [4.2, h => { h.hideCards(); h.unpoint(); h.say('Romans ate feasts, so I planned peacock, dormice and oysters.', { conf: 66 }); }],
+      [4.2, h => { h.hideCards(); h.unpoint(); h.say('I took “what Romans ate” to mean a feast. I planned peacock, dormice and oysters.', { conf: 66 }); }],
       [4.8, (h, w) => { w.setState('feast'); w.camOverride = { target: W.anchors.feast, dist: 76, el: .58, az: .5, oy: .03 }; }],
       [6.2, h => P.add(h, W.anchors.feast, 'A Roman feast', 'hd-tag ai')],
       [6.8, h => { h.meters([{ key: 'a', label: 'Accuracy', icon: 'check' }, { key: 'c', label: 'Curiosity', icon: 'bulb' }]); arts = h.slot('arts', `<small>Evidence found <span class="hd-count">0/4</span></small><div class="hd-arts">${ITEMS.map(([k, n]) => `<div class="hd-art"><span>${ART[k]}</span>${n}</div>`).join('')}</div>`); }],
       [7.1, h => { h.meter('a', 34, -1); h.meter('c', 90, 1); }],
       [8.3, h => h.ask('Who in Londinium ate like this? Who did not?')],
-      [9.8, h => { h.hush(); h.hidePanel(); h.root.querySelectorAll('.hd-tag').forEach(e => e.classList.remove('on')); h.setCards(cards, { label: 'Try a sharper question' }); }],
+      [9.8, h => { h.hush(); h.hidePanel(); h.root.querySelectorAll('.hd-tag').forEach(e => e.classList.remove('on')); h.setCards(cards, { label: 'Ask a clearer question' }); }],
       [10.6, h => h.point(h.card(1))],
       [11.2, h => { h.tap(); h.pick(1); h.unask(); }],
-      [11.7, h => { h.hideCards(); h.unpoint(); h.say('Checking the evidence on the wharf, at the bakery and by the river.', { chip: 'Evidence', conf: 85, tone: 'check' }); }],
+      [11.7, h => { h.hideCards(); h.unpoint(); h.say('I’ll check the evidence where boats unload, at the bakery and by the river.', { chip: 'Evidence', conf: 85, tone: 'check' }); }],
       [12.1, (h, w) => { w.setState('evidence'); w.camOverride = { target: W.anchors.wharf, dist: 74, el: .6, az: .62, oy: .03 }; }],
       [13.4, h => { P.add(h, W.anchors.amphorae, 'Olive oil from Spain', 'hd-tag good'); h.on(h.panel); got(1); arts.querySelector('.hd-count').textContent = '1/4'; }],
       [14.1, h => { P.add(h, W.anchors.bakery, 'Bread oven', 'hd-tag good'); got(2); arts.querySelector('.hd-count').textContent = '2/4'; }],
       [14.8, h => { P.add(h, W.anchors.oysters, 'Oyster shells', 'hd-tag good'); got(3); arts.querySelector('.hd-count').textContent = '3/4'; }],
       [15.6, h => { h.meter('a', 88, 1); h.meter('c', 94, 1); }],
       [16.9, (h, w) => { w.camOverride = { target: W.anchors.wharf, dist: 50, el: .5, az: .62, oy: .08 }; }],
-      [17.2, h => { h.hush(); h.hidePanel(); h.celebrate(3, 'Diary page saved with three pieces of evidence', { badge: 'Evidence checked', xp: 120, style: 'stamp' }); h.setStats(8, 1640); }],
+      [17.2, h => { h.hush(); h.hidePanel(); h.celebrate(3, 'Diary saved with three pieces of evidence', { badge: 'Evidence checked', xp: 120, style: 'stamp' }); h.setStats(8, 1640); }],
       [20.8, h => { h.uncelebrate(); h.root.querySelectorAll('.hd-tag').forEach(e => e.classList.remove('on')); }]
     ]
   };

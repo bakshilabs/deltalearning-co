@@ -91,8 +91,9 @@ export class Hud {
   point(target, { tap = false } = {}) {
     // aim at a card's letter badge so the hand never hides the words
     const aim = (target.querySelector && target.querySelector('.hd-k, .k')) || target;
-    const r = this.root.getBoundingClientRect(), t = aim.getBoundingClientRect();
-    const x = t.left - r.left + t.width * .5, y = t.top - r.top + t.height * .6;
+    // measured in screen pixels; divide by the page zoom (big screens) to get the HUD's own pixels
+    const r = this.root.getBoundingClientRect(), t = aim.getBoundingClientRect(), z = r.width / (this.root.offsetWidth || r.width) || 1;
+    const x = (t.left - r.left + t.width * .5) / z, y = (t.top - r.top + t.height * .6) / z;
     this.finger.style.transform = `translate(${x}px, ${y}px)`;
     this.finger.classList.add('on');
     if (tap) this.tap();
@@ -115,9 +116,9 @@ export class Hud {
       // a "+XP" chip flies from the burst to the XP counter
       const fly = document.createElement('span'); fly.className = 'hd-fly'; fly.textContent = `+${xp} XP`;
       this.root.appendChild(fly);
-      const r = this.root.getBoundingClientRect(), b = this.burst.getBoundingClientRect(), x = this.stats.querySelector('.st-xp').getBoundingClientRect();
-      fly.style.setProperty('--from', `translate(${b.left - r.left}px, ${b.top - r.top + 40}px) scale(.8)`);
-      fly.style.setProperty('--to', `translate(${x.left - r.left + x.width / 2}px, ${x.top - r.top + x.height / 2}px) scale(.9)`);
+      const r = this.root.getBoundingClientRect(), b = this.burst.getBoundingClientRect(), x = this.stats.querySelector('.st-xp').getBoundingClientRect(), z = r.width / (this.root.offsetWidth || r.width) || 1;
+      fly.style.setProperty('--from', `translate(${(b.left - r.left) / z}px, ${(b.top - r.top) / z + 40}px) scale(.8)`);
+      fly.style.setProperty('--to', `translate(${(x.left - r.left + x.width / 2) / z}px, ${(x.top - r.top + x.height / 2) / z}px) scale(.9)`);
       fly.classList.add('go');
       setTimeout(() => fly.remove(), 1600);
     }

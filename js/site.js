@@ -90,3 +90,17 @@
   // folded detail (the mission list, the track record) is open on wide screens and folded on phones
   if (matchMedia('(max-width: 640px)').matches) [].forEach.call(document.querySelectorAll('details[data-fold]'), function (d) { d.open = false; });
 })();
+
+/* Some browsers apply the page zoom used on big screens twice to text sized by its container.
+   Measure it once and correct the game text so it is the same size in every browser. */
+(function () {
+  function fix() {
+    var root = document.documentElement; root.style.removeProperty('--cqfix');
+    var hud = document.querySelector('.gw .hud'); if (!hud) return;
+    var box = hud.closest('.gw'), small = matchMedia('(max-width: 640px)').matches;
+    var want = Math.max(small ? 10.5 : 9.5, box.offsetWidth * (small ? .0295 : .0162)), got = parseFloat(getComputedStyle(hud).fontSize);
+    if (want > 9.6 && got / want > 1.08) root.style.setProperty('--cqfix', String(got / want));
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fix); else fix();
+  addEventListener('resize', fix);
+})();

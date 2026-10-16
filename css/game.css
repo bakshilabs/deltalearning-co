@@ -15,7 +15,7 @@
 .gw[data-brand="museum"] { --b1: #b6392a; --b2: #e8b04b; --b3: #3e120c; --bs: #fbf1e6; }
 .gw[data-brand="delta"] { --b1: #0c8f83; --b2: #59c7fc; --b3: #0c1b24; --bs: #e6f7f5; }
 
-.hud { position: absolute; inset: 0; pointer-events: none; z-index: 2; font-size: max(9.5px, 1.62cqw); color: #10202b; line-height: 1.25; }
+.hud { position: absolute; inset: 0; pointer-events: none; z-index: 2; font-size: max(9.5px, calc(1.62cqw / var(--cqfix, 1))); color: #10202b; line-height: 1.25; }
 .hud.instant *, .hud.instant { transition: none !important; animation-duration: 0s !important; }
 .hud.instant .hd-burst.on .hd-stars span { transform: none; }
 .hud > * { position: absolute; }
@@ -230,7 +230,7 @@
 
 /* small screens: give the HUD a little more weight */
 @container (max-width: 520px) {
-  .hud { font-size: max(10.5px, 2.95cqw); }
+  .hud { font-size: max(10.5px, calc(2.95cqw / var(--cqfix, 1))); }
   .hd-brand small, .hd-pick, .st-xp, .hd-board, .hd-slot, .hd-chip, .hd-who b, .hd-conf, .hd-ring svg { display: none !important; }
   .hd-brand { padding: .3em .7em .3em .3em; }
   .hd-logo { width: 1.9em; height: 1.9em; }

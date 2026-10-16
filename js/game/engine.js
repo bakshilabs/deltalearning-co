@@ -559,7 +559,8 @@ export class View {
     const dpr = Math.min(window.devicePixelRatio || 1, this.maxDpr) * hub.quality;
     const w = Math.max(2, Math.round(r.width * dpr)), h = Math.max(2, Math.round(r.height * dpr));
     if (w !== this.canvas.width || h !== this.canvas.height) { this.canvas.width = w; this.canvas.height = h; this.dirty = true; }
-    this.cssW = r.width; this.cssH = r.height;
+    // layout size in the element's own CSS pixels, so labels line up even when the page is zoomed on big screens
+    this.cssW = this.el.offsetWidth || r.width; this.cssH = this.el.offsetHeight || r.height;
   }
   update(t, dt) {
     if (!this.world) return;

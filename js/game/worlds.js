@@ -426,8 +426,8 @@ function rover(accent = 0x5b4cf0) {
 function marsWorld() {
   const L = new Land(56, 26, 38, 10);
   const W = new World({
-    sky: [[0, 0x231f5c], [.45, 0x6b4a9e], [.78, 0xd9839a], [1, 0xffc79a]], fog: [0xf3b39a, 170, 300],
-    hemi: [0xe6d6ff, 0x5a2a1a, 1.15], sun: [0xffe9d2, 3.7], sunDir: [-.5, .85, .8], shadow: 34,
+    sky: [[0, 0x7fc0f0], [.55, 0xcfe3f2], [.85, 0xf6dcc8], [1, 0xffe8d4]], fog: [0xf7e2d2, 170, 300],
+    hemi: [0xeef2ff, 0x7a3a22, 1.3], sun: [0xfff2e0, 3.9], sunDir: [-.5, .85, .8], shadow: 34,
     center: [0, -1.5, 0], cam: { az: .6, el: .6, dist: 110, fov: 24 }
   });
   const CR = { x: 45, z: 18.5, r: 6.4 }, SAND = { x: 27, z: 20, r: 3.8 };
@@ -724,12 +724,13 @@ function islandWorld() {
       const ud = k.userData; ud.pivL.rotation.x = ud.pivR.rotation.x = sit ? -1.4 : ud.pivL.rotation.x;
     });
     // sky and light shift towards sunset
-    const d = S.dusk;
+    // only a hint of sunset, so the scene stays bright and easy to read
+    const d = S.dusk * .25;
     W.skyStops = lerpStops(DAY, DUSK, d);
     W.sun.color.setHex(mixHex(0xfff1d8, 0xffa060, d)); W.sun.intensity = 3.5 - d * 1.3;
     W.hemi.intensity = 1.15 - d * .35; W.hemi.color.setHex(mixHex(0xd6ecff, 0xffb8c8, d));
-    lamp.material.emissive.setHex(mixHex(0x000000, 0xffd060, d));
-    beam.material.opacity = d * .28; lampGlow.material.opacity = d; beamPivot.rotation.y = t * 1.3;
+    lamp.material.emissive.setHex(mixHex(0x000000, 0xffd060, S.dusk));
+    beam.material.opacity = S.dusk * .28; lampGlow.material.opacity = S.dusk; beamPivot.rotation.y = t * 1.3;
     fireGlow.material.opacity = .5 + d * .5 + Math.sin(t * 13) * .1;
     if (Math.random() < .6) fire.spawn({ x: fireAt.x + (Math.random() - .5) * .6, y: fireAt.y + .3, z: fireAt.z + (Math.random() - .5) * .6, vx: (Math.random() - .5) * .3, vy: 1.6 + Math.random(), vz: (Math.random() - .5) * .3, life: .7, grow: -.6, color: pick([0xffd23f, 0xff9f2e, 0xff6a2b], Math.random()), size: .32 });
     fire.update(dt);

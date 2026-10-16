@@ -1,4 +1,4 @@
-// Voxel game engine for the Delta Learning site.
+// Voxel game engine for the DeltaOps Learning site.
 // One WebGL renderer draws every game view on the page into its own 2D canvas,
 // so the page never holds more than one WebGL context.
 import * as THREE from '../vendor/three.module.min.js';

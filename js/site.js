@@ -1,4 +1,4 @@
-/* Delta Learning · page behaviour that is not part of the games:
+/* DeltaOps Learning · page behaviour that is not part of the games:
    nav, scroll progress, mobile menu and reveals. */
 (function () {
   'use strict';

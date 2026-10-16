@@ -21,7 +21,7 @@ function pond(W, view) {
   const SPECIES = [['Mallard', '#2f8a52'], ['Frog', '#5cc04a'], ['Dragonfly', '#2fa8ff'], ['Heron', '#9aa6b3'], ['Butterfly', '#ff9f2e'], ['Damselfly', '#34d1a0'], ['Pond skater', '#7a5a3a'], ['Newt', '#e07b39']];
   let journal = null;
   const close = { dist: 80, el: .7, az: .55, oy: .04 }, bw = { dist: 74, el: .62, az: .95, target: W.anchors.boardwalk, oy: .04 };
-  const cardsA = ['Make it nice for visitors', 'Add a boardwalk and keep the reeds wild', 'Plant native flowers on one bank'];
+  const cardsA = ['Make it tidy for visitors', 'Add a boardwalk and keep the reeds wild', 'Plant native flowers on one bank'];
   return {
     length: 19.5, poster: 17.8,
     reset() { W.setState('start'); W.camOverride = null; journal = null; },
@@ -31,12 +31,12 @@ function pond(W, view) {
       [1.9, h => h.setCards(cardsA, { label: 'Tell the AI helper what to do' })],
       [3.0, h => h.point(h.card(0))],
       [3.8, h => { h.tap(); h.pick(0); }],
-      [4.4, h => { h.hideCards(); h.unpoint(); h.say('I took “nice” to mean tidy. I’ll cut the reeds and add a gravel path and a deck.', { conf: 64 }); }],
+      [4.4, h => { h.hideCards(); h.unpoint(); h.say('I took “tidy” to mean cut back. I’ll cut the reeds and add a gravel path and a deck.', { conf: 64 }); }],
       [5.0, (h, w) => { w.setState('nice'); w.camOverride = close; }],
       [6.8, h => { h.meters([{ key: 'v', label: 'Visitors', icon: 'people' }, { key: 'w', label: 'Wildlife', icon: 'leaf' }]); journal = h.slot('journal', chips(SPECIES, 2, 'Species seen')); }],
       [7.1, h => { h.meter('v', 88, 1); h.meter('w', 41, -1); }],
       [8.2, h => h.pop('The ducks have left', 'bad')],
-      [9.6, h => { h.unpop(); h.ask('You asked for “nice”. What did the AI think you meant?'); }],
+      [9.6, h => { h.unpop(); h.ask('You asked for “tidy”. What did the AI think you meant?'); }],
       [11.2, h => { h.hush(); h.hidePanel(); h.setCards(cardsA, { label: 'Choose a clearer instruction' }); }],
       [12.0, h => h.point(h.card(1))],
       [12.7, h => { h.tap(); h.pick(1); h.unask(); }],

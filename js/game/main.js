@@ -185,21 +185,21 @@ if (worldsEl) {
 const PLANS = [
   { key: 'A', card: 'Show what Romans ate', scene: 'feast', focus: 'feast',
     tag: 'AI guessed', assumed: 'You did not say which Romans, so it planned a rich family’s feast.',
-    claims: [['Roast peacock for dinner', 'bad', 'Only the very rich ate this'], ['Dormice cooked in honey', 'bad', 'A rare treat for the rich'], ['Oysters from the river', 'good', 'Oyster shells found by the river'], ['Bread from a bakery', 'unknown', 'Not checked']],
+    claims: [['Roast peacock for dinner', 'bad', 'Only the very rich ate this', 'feast'], ['Dormice cooked in honey', 'bad', 'A rare treat for the rich', 'feast'], ['Oysters from the river', 'good', 'Oyster shells found by the river', 'oysters'], ['Bread from a bakery', 'unknown', 'Not checked', 'bakery']],
     effect: 'The feast looks exciting, but a traveller stepping off a boat would never have eaten like this.',
     tradeoff: 'Only one of the four claims fits the traveller. The AI guessed which Romans you meant.',
     facil: 'Who in Londinium ate like this? Who did not? What could you add to your card?',
     acc: 30, ev: 25 },
-  { key: 'B', card: 'Make the traveller’s meal exciting', scene: 'feast', focus: 'feast',
+  { key: 'B', card: 'Make the traveller’s meal exciting', scene: 'modern', focus: 'tomatoes',
     tag: 'AI guessed', assumed: 'You asked for exciting, so it added foods that only reached Britain much later.',
-    claims: [['Tomato and basil stew', 'bad', 'Tomatoes came from the Americas over 1,000 years later'], ['Potatoes with the fish', 'bad', 'Potatoes also came from the Americas, much later'], ['A cup of hot chocolate', 'bad', 'Chocolate reached Britain over 1,200 years later'], ['Olive oil on the bread', 'good', 'Olive oil jars from Spain found at the wharf']],
+    claims: [['Tomato and basil stew', 'bad', 'Tomatoes came from the Americas over 1,000 years later', 'tomatoes'], ['Potatoes with the fish', 'bad', 'Potatoes also came from the Americas, much later', 'potatoes'], ['A cup of hot chocolate', 'bad', 'Chocolate reached Britain over 1,200 years later', 'chocolate'], ['Olive oil on the bread', 'good', 'Olive oil jars from Spain found at the wharf', 'amphorae']],
     effect: 'Three of the four foods on the table did not exist in Roman Britain.',
     tradeoff: 'The meal is exciting, but most of it is made up. Exciting is not the same as true.',
     facil: 'You asked for exciting. Did you ask for true? How could you check each food?',
     acc: 15, ev: 25 },
   { key: 'C', card: 'Find what a dock worker ate, and show the evidence', scene: 'evidence', focus: 'wharf',
     tag: 'AI guessed', assumed: 'You did not say how many finds to check, so it stopped at three.',
-    claims: [['Bread from the bakery', 'good', 'A bread oven found near the forum'], ['Olive oil from Spain', 'good', 'Olive oil jars found at the wharf'], ['Oysters from the river', 'good', 'Oyster shells found by the river'], ['Wine with water', 'unknown', 'Not checked yet']],
+    claims: [['Bread from the bakery', 'good', 'A bread oven found near the forum', 'bakery'], ['Olive oil from Spain', 'good', 'Olive oil jars found at the wharf', 'amphorae'], ['Oysters from the river', 'good', 'Oyster shells found by the river', 'oysters'], ['Wine with water', 'unknown', 'Not checked yet', 'ship']],
     effect: 'Three finds from the ground back up the dock worker’s meal.',
     tradeoff: 'The meal is plainer, but every part of it is backed up by something found in the ground.',
     facil: 'The AI stopped at three finds. What would a fourth one tell you?',
@@ -219,7 +219,8 @@ function demo() {
   const world = WORLDS.rome();
   const view = new View(gameEl, { maxDpr: 2 });
   if (view.ok) { view.setWorld(world); gameEl.classList.add('ready'); } else gameEl.classList.add('nogl');
-  const CAM = { feast: { target: world.anchors.feast, dist: 56, el: .55, az: .5, oy: .03 }, wharf: { target: world.anchors.wharf, dist: 58, el: .58, az: .62, oy: .03 } };
+  const CAM = { feast: { target: world.anchors.feast, dist: 46, el: .78, az: .5, oy: .02 }, wharf: { target: world.anchors.wharf, dist: 48, el: .74, az: .62, oy: .02 }, tomatoes: { target: world.anchors.tomatoes, dist: 44, el: .78, az: .55, oy: .02 } };
+  const look = a => ({ target: world.anchors[a], dist: 34, el: .74, az: .58, oy: .04 });
   let tried = [], cur = -1, timers = [];
   const phone = () => matchMedia('(max-width: 640px)').matches;
   const later = (fn, ms) => timers.push(setTimeout(fn, reduce ? 0 : ms));
@@ -260,9 +261,9 @@ function demo() {
     if (chartEmpty) chartEmpty.hidden = true;
     setFlow('decision');
     $('[data-pick]').textContent = 'The AI helper is planning the meal…';
-    world.setState(p.scene); world.camOverride = CAM[p.focus]; view.refresh(20);
-    status.textContent = p.scene === 'feast' ? 'The AI planned a feast' : 'The AI is checking the finds';
-    status.className = 'dm-status' + (p.scene === 'feast' ? ' warn' : ''); status.hidden = false;
+    world.clearMarks(); world.setState(p.scene); world.camOverride = CAM[p.focus]; view.refresh(20);
+    status.textContent = { feast: 'The AI planned a rich family’s feast', modern: 'The AI added exciting foods', evidence: 'The AI is digging for finds' }[p.scene];
+    status.className = 'dm-status' + (p.scene === 'evidence' ? '' : ' warn'); status.hidden = false;
     setFound(0); claimsOf(p, 0);
     later(() => setFlow('response'), 350);
     // claims are checked one at a time
@@ -271,8 +272,9 @@ function demo() {
       setFound(p.claims.slice(0, j + 1).filter(x => x[1] === 'good').length);
       status.textContent = `${c[0]}: ${c[1] === 'good' ? 'backed up' : c[1] === 'bad' ? 'not true' : 'not checked'}`;
       status.className = 'dm-status' + (c[1] === 'bad' ? ' bad' : c[1] === 'unknown' ? ' warn' : '');
-    }, 900 + j * 650));
-    later(() => done(k), 900 + p.claims.length * 650 + 300);
+      world.camOverride = look(c[3]); world.mark(c[3], c[1]); view.refresh(20);
+    }, 1600 + j * 1300));
+    later(() => { world.camOverride = CAM[p.focus]; view.refresh(20); done(k); }, 1600 + p.claims.length * 1300 + 400);
   }
   function done(k) {
     const p = PLANS[k];
@@ -322,7 +324,7 @@ function demo() {
     outc.hidden = true; pathBox.hidden = true; res.hidden = true; status.hidden = true;
     cards.forEach(c => { c.setAttribute('aria-pressed', 'false'); c.classList.remove('tried'); });
     list.innerHTML = ''; if (chartEmpty) chartEmpty.hidden = false; setFound(0);
-    world.setState('start'); world.camOverride = null; view.refresh(20);
+    world.clearMarks(); world.setState('start'); world.camOverride = null; view.refresh(20);
     $('[data-pick]').textContent = 'Pick a card to tell the AI helper what to find out.';
     setFlow('mission');
   });

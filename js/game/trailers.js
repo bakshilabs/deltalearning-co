@@ -83,7 +83,7 @@ function mars(W, view) {
   const P = pinner(view);
   let prog = null, boxes = {};
   const cards = ['Drive as fast as you can', 'Use wide wheels and stay under 5 km/h', 'Test on sand before the long drive'];
-  const follow = { target: W.anchors.rover, dist: 62, el: .56, az: .5, oy: .03 };
+  const follow = { target: W.anchors.rover, dist: 42, el: .56, az: .5, oy: .03 };
   const blk = (txt, c, cls = '') => `<div class="hd-blk ${cls}" style="--c:${c}">${txt}</div>`;
   return {
     length: 23, poster: 21.3,
@@ -106,9 +106,9 @@ function mars(W, view) {
       [11.7, h => h.point(h.card(1))],
       [12.3, h => { h.tap(); h.pick(1); h.unask(); }],
       [12.7, h => { h.hideCards(); h.unpoint(); const b = prog.querySelectorAll('.hd-blk')[1]; b.outerHTML = blk('drive <em>with wide wheels, under 5 km/h</em>', '#5b4cf0', 'swap'); h.say('Wide wheels spread the weight. Driving slowly over the dunes.', { chip: 'Plan', conf: 90, tone: 'check' }); }],
-      [13.1, (h, w) => { w.setState('wide'); w.camOverride = { ...follow, dist: 84, az: .62 }; }],
+      [13.1, (h, w) => { w.setState('wide'); w.camOverride = { ...follow, dist: 52, az: .62 }; }],
       [14.6, (h, w) => {
-        w.camOverride = { ...follow, dist: 84, az: .62, target: W.anchors.rover.clone().add(new W.anchors.rover.constructor(3, 0, 0)) };
+        w.camOverride = { ...follow, dist: 60, az: .62, target: W.anchors.rover.clone().add(new W.anchors.rover.constructor(3, 0, 0)) };
         boxes.a = P.add(h, W.anchors.rockA, '<b>Rock 94%</b>', 'hd-vbox opt', 1);
         boxes.b = P.add(h, W.anchors.rockB, '<b>Rock 91%</b>', 'hd-vbox opt', 1);
         boxes.c = P.add(h, W.anchors.shadow, '<b>Crater 58%</b>', 'hd-vbox bad', 1);
@@ -171,7 +171,7 @@ function island(W, view) {
       ...seq(2.8, [0, 1, 0, 0, 2, 0, 0, 1]),
       [5.0, () => result(0)],
       [5.6, h => { hideVotes(); h.say('I took “quickest” to mean shortest. I sent you straight over the ridge.', { conf: 70 }); }],
-      [6.1, (h, w) => { w.setState('quick'); w.camOverride = { target: W.anchors.team, dist: 72, el: .56, az: .78, oy: .02 }; }],
+      [6.1, (h, w) => { w.setState('quick'); w.camOverride = { target: W.anchors.team, dist: 56, el: .6, az: .78, oy: .02 }; }],
       [9.6, h => { h.pop('The slope is too steep. The team needs a rest', 'bad'); h.meters([{ key: 't', label: 'Time left', icon: 'clock' }, { key: 'e', label: 'Energy', icon: 'bolt' }]); }],
       [9.9, h => { h.meter('t', 81); h.meter('e', 30, -1); }],
       [11.0, h => { h.unpop(); h.ask('The shortest route can take longer. What else matters?'); }],
@@ -179,7 +179,7 @@ function island(W, view) {
       ...seq(12.9, [1, 1, 2, 1, 1, 1, 0, 1]),
       [14.9, () => result(1)],
       [15.4, h => { hideVotes(); h.unask(); h.say('Following the river. A rest at the hut keeps your energy up.', { chip: 'Plan', conf: 88, tone: 'check' }); }],
-      [15.8, (h, w) => { w.setState('river'); w.camOverride = { target: W.anchors.team, dist: 76, el: .62, az: .55, oy: .02 }; }],
+      [15.8, (h, w) => { w.setState('river'); w.camOverride = { target: W.anchors.team, dist: 58, el: .64, az: .55, oy: .02 }; }],
       [18.2, (h, w) => { h.on(h.panel); h.meter('t', 64, -1); h.meter('e', 86, 1); w.camOverride = { target: W.anchors.lighthouse, dist: 100, el: .5, az: .62, oy: .06 }; }],
       [20.9, (h, w) => { w.camOverride = { target: W.anchors.team, dist: 52, el: .45, az: .7, oy: .2 }; }],
       [21.2, h => { h.hush(); h.hidePanel(); h.celebrate(3, 'Expedition map saved', { badge: 'Otters take first place', xp: 120, style: 'confetti' }); h.setStats(6, 760); score.Otters = 510; drawBoard(); }],

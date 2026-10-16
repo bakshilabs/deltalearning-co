@@ -410,7 +410,7 @@ function rover(accent = 0x5b4cf0) {
     box(.06, .9, .06, 0xc7ccd2, -.7, 2, -1.05), box(.5, .06, .5, 0xdfe3e8, -.7, 2.46, -1.05), box(.1, .1, .1, accent, -.7, 2.55, -1.05));
   g.add(body);
   const sets = {};
-  for (const [kind, r, w] of [['small', .36, .3], ['wide', .56, .66]]) {
+  for (const [kind, r, w] of [['small', .34, .26], ['wide', .72, 1.05]]) {
     const s = new THREE.Group(); s.userData.r = r;
     for (const side of [-1, 1]) for (const z of [-1.05, 0, 1.05]) {
       const wh = wheel(r, w); wh.position.set(side * (1.08 + w / 2), r, z); s.add(wh);
@@ -419,7 +419,7 @@ function rover(accent = 0x5b4cf0) {
     sets[kind] = s; g.add(s);
   }
   g.userData = { body, sets, kind: 'small' };
-  g.setWheels = kind => { g.userData.kind = kind; for (const k in sets) sets[k].visible = k === kind; body.position.y = kind === 'wide' ? .22 : 0; };
+  g.setWheels = kind => { g.userData.kind = kind; for (const k in sets) sets[k].visible = k === kind; body.position.y = kind === 'wide' ? .4 : 0; };
   g.setWheels('small');
   return g;
 }
@@ -519,7 +519,7 @@ function marsWorld() {
     if (mode === 'fast') { rv.setWheels('small'); }
     if (mode === 'wide') { R.u = 0; R.sink = 0; R.pop = 0; rv.setWheels('wide'); resetTracks(); }
     if (mode === 'done') { rv.setWheels('wide'); R.u = 1; R.sink = 0; }
-    if (instant) { if (mode === 'fast') { R.u = sandU; R.sink = .45; } if (mode === 'wide') { R.u = 1; R.pop = 1; } R.mt = 99; }
+    if (instant) { if (mode === 'fast') { R.u = sandU; R.sink = .85; } if (mode === 'wide') { R.u = 1; R.pop = 1; } R.mt = 99; }
     W.state = mode;
   };
   W.scan = () => { R.scan = 0; };
@@ -530,7 +530,7 @@ function marsWorld() {
     let speed = 0;
     if (R.mode === 'fast') {
       if (R.u < sandU) { speed = Math.min(.3, R.mt * .35); R.u = Math.min(sandU, R.u + speed * dt); }
-      else { R.sink = Math.min(.45, R.sink + dt * .5); R.spin += dt * 22; }
+      else { R.sink = Math.min(.85, R.sink + dt * .7); R.spin += dt * 22; }
     } else if (R.mode === 'wide' && R.mt > .4) {
       speed = Math.min(.19, (R.mt - .4) * .25); R.u = Math.min(1, R.u + speed * dt);
     }
@@ -542,7 +542,7 @@ function marsWorld() {
     const ahead = along(route, Math.min(1, R.u + .02)), yA = L.ys(ahead[0], ahead[1]);
     rv.rotation.set(R.mode === 'fast' && R.sink > .05 ? Math.sin(t * 30) * .03 - .12 : -(yA - L.ys(x, z)) * .35, hd, 0);
     const sc = R.pop < 1 ? Math.max(.001, 1 + Math.sin(R.pop * Math.PI) * .25) * (R.pop < .2 ? R.pop * 5 : 1) : 1;
-    rv.scale.setScalar(sc);
+    rv.scale.setScalar(sc * 1.5);
     R.spin += speed * dt * total / rv.userData.sets[rv.userData.kind].userData.r;
     rv.userData.sets[rv.userData.kind].children.forEach(c => { if (c.geometry && c.geometry.type === 'CylinderGeometry') c.rotation.x = R.spin; });
     // dust
@@ -683,7 +683,7 @@ function islandWorld() {
 
   // the team
   const team = [0xff6a2b, 0xff6a2b, 0xff6a2b, 0xff6a2b].map((c, i) => kid({ shirt: c, pants: 0x2d3a5a, skin: kid.skins[[1, 3, 0, 2][i]], hair: [0x2b1d14, 0x1a1a1a, 0xe0b060, 0x7a3a1a][i], long: i % 2 === 1, hat: i === 0 ? 0x1fc7b6 : null }));
-  team.forEach(k => { k.scale.setScalar(1.35); W.root.add(k); });
+  team.forEach(k => { k.scale.setScalar(1.9); W.root.add(k); });
   const S = { mode: 'start', mt: 0, u: 0, energy: 1, dusk: 0, duskT: 0, rest: 0 };
   W.setState = (mode, instant) => {
     S.mode = mode; S.mt = 0;
@@ -694,9 +694,19 @@ function islandWorld() {
     W.state = mode;
   };
   W.setState('start', true);
+  // the chosen route, drawn on the ground as a glowing trail just ahead of the team
+  const trailOf = (r, c) => {
+    const pts = [];
+    for (let i = 1; i < r.length; i++) { const [ax, az] = r[i - 1], [bx, bz] = r[i], n = Math.ceil(Math.hypot(bx - ax, bz - az) / .9); for (let k = 0; k < n; k++) { const x = ax + (bx - ax) * k / n, z = az + (bz - az) * k / n; pts.push([x, z]); } }
+    const g = new THREE.Group();
+    pts.forEach(([x, z], i) => { const d = box(.95, .22, .95, c, L.wx(x - .5), L.ys(x, z) + .14, L.wz(z - .5), { emissive: c, emissiveIntensity: .7 }); d.userData.u = i / (pts.length - 1); g.add(d); });
+    W.root.add(g); return g;
+  };
+  const trails = { quick: trailOf(routeA, 0xff7a2b), river: trailOf(routeB, 0x2aa6ff) };
   let fishA = 0;
   W.tick((t, dt) => {
     time.value = t; S.mt += dt;
+    for (const k in trails) trails[k].children.forEach(d => { const on = S.mode === k && d.userData.u <= (k === 'quick' ? Math.min(.5, S.u) + .2 : S.u + .22); d.visible = on; if (on) { const k = .95 * (1 + Math.sin(t * 5 - d.userData.u * 30) * .14); d.scale.set(k, .22, k); } });
     let route = routeA, moving = false;
     if (S.mode === 'quick') {
       const climb = S.u > .22 && S.u < .55;
@@ -850,15 +860,16 @@ function romeWorld() {
   W.root.add(new Tiles(shells, { drop: 0 }).mesh);
   const smoke = new Particles(50, { size: .4 }); W.root.add(smoke.mesh);
   const ovenTop = L.at(21, 24, 2.4);
-  const S = { mode: 'start', feast: 0, pins: 0 };
-  W.setState = (mode, instant) => { S.mode = mode; if (instant) { S.feast = mode === 'feast' ? 1 : 0; S.pins = mode === 'evidence' ? 1 : 0; } W.state = mode; };
+  const S = { mode: 'start', feast: 0, pins: 0, modern: 0 };
+  W.setState = (mode, instant) => { S.mode = mode; if (instant) { S.feast = mode === 'feast' || mode === 'modern' ? 1 : 0; S.pins = mode === 'evidence' ? 1 : 0; S.modern = mode === 'modern' ? 1 : 0; } W.state = mode; };
   W.setState('start', true);
   const walkers = [[[27.5, 6], [27.5, 24]], [[6, 18.5], [24, 18.5]], [[30, 18.5], [50, 18.5]], [[34, 15], [45, 23]], [[10, 26], [40, 26]], [[38, 26], [12, 26]]];
   W.tick((t, dt) => {
     time.value = t;
-    const ft = S.mode === 'feast' ? 1 : 0, pt = S.mode === 'evidence' ? 1 : 0;
-    S.feast += (ft - S.feast) * Math.min(1, dt * 4); S.pins += (pt - S.pins) * Math.min(1, dt * 4);
-    const fs = S.feast < .02 ? .001 : S.feast * 1.5; feast.scale.setScalar(fs); feast.visible = S.feast > .02;
+    const ft = S.mode === 'feast' || S.mode === 'modern' ? 1 : 0, pt = S.mode === 'evidence' ? 1 : 0, mt = S.mode === 'modern' ? 1 : 0;
+    S.feast += (ft - S.feast) * Math.min(1, dt * 4); S.pins += (pt - S.pins) * Math.min(1, dt * 4); S.modern += (mt - S.modern) * Math.min(1, dt * 4);
+    extras(t, dt);
+    const fs = S.feast < .02 ? .001 : S.feast * 2.2; feast.scale.setScalar(fs); feast.visible = S.feast > .02;
     pins.forEach((p, i) => { const s = clamp(S.pins * 1.5 - i * .25); p.visible = s > .02; p.scale.setScalar(Math.max(.001, s)); p.position.y = p.userData.base.y + Math.sin(t * 3 + i) * .2; p.rotation.y = t * 1.5; });
     people.forEach((k, i) => {
       const [a, b] = walkers[i], u = (Math.sin(t * .12 + i * 1.7) + 1) / 2, x = lerp(a[0], b[0], u), z = lerp(a[1], b[1], u);
@@ -871,7 +882,58 @@ function romeWorld() {
     smoke.update(dt);
     ship.position.y = -.3 + Math.sin(t * 1.2) * .08; ship.rotation.z = Math.sin(t * .9) * .03;
   });
-  W.anchors = { feast: L.at(40, 19, 3.2), temple: L.at(27, 8, 12), amphorae: pins[0].userData.base, bakery: pins[1].userData.base, oysters: pins[2].userData.base, ship: L.at(35, 31, 5), wharf: L.at(20, 26, 1) };
+  // ---- the demo's bigger moments: a banquet, foods from much later, dig pits, and check marks ----
+  const pop = (o, k) => { o.visible = k > .02; o.scale.setScalar(Math.max(.001, k)); };
+  // a banquet: guests in togas round the feast, torches and gold plates
+  const banquet = new THREE.Group(); banquet.position.copy(L.at(40, 19)); W.root.add(banquet);
+  [[-3.4, -1.6], [-1.2, -1.9], [1.2, -1.9], [3.4, -1.6], [-3.4, 1.6], [3.4, 1.6]].forEach(([x, z], i) => {
+    const g = kid({ shirt: [0x6a2a8a, 0xf2efe6, 0xc9a227, 0xf2efe6, 0x6a2a8a, 0xc9a227][i], pants: 0xf2efe6, skin: kid.skins[i % 5], hair: [0x2b1d14, 0xe0b060, 0x1a1a1a, 0x7a3a1a, 0x3b2a20, 0x2b1d14][i], tunic: true, long: i % 2 === 0 });
+    g.scale.setScalar(.95); g.position.set(x, 0, z); g.rotation.y = z < 0 ? 0 : Math.PI; banquet.add(g);
+  });
+  for (const [x, z] of [[-4.6, 0], [4.6, 0]]) { banquet.add(box(.25, 2.6, .25, 0x6b4428, x, 1.3, z)); const fl = glow(0xffb040, 2.4, .9); fl.position.set(x, 2.8, z); banquet.add(fl); banquet.add(box(.45, .45, .45, 0xffc040, x, 2.75, z)); }
+  for (let i = 0; i < 6; i++) banquet.add(box(.5, .08, .5, 0xe8c547, -2.4 + i * .95, 1.1, i % 2 ? .55 : -.55));
+  // foods that only reached Britain much later, piled big on the market
+  const modern = new THREE.Group(); modern.position.copy(L.at(38, 21)); W.root.add(modern);
+  const tomatoes = new THREE.Group(); tomatoes.add(box(2.2, .9, 1.6, 0x9a6d44, 0, .45, 0));
+  for (let i = 0; i < 9; i++) tomatoes.add(box(.62, .62, .62, i % 3 ? 0xe23a2a : 0xf05a3a, -.75 + (i % 3) * .75, 1.15 + Math.floor(i / 3) * .1, -.5 + Math.floor(i / 3) * .5), box(.2, .14, .2, 0x3a9a3a, -.75 + (i % 3) * .75, 1.52, -.5 + Math.floor(i / 3) * .5));
+  const potatoes = new THREE.Group();
+  for (let i = 0; i < 3; i++) potatoes.add(box(1.1, 1.3, 1.1, 0xc9a86a, i * 1.25 - 1.25, .65, 0), box(.9, .25, .9, 0x8a6a3a, i * 1.25 - 1.25, 1.42, 0));
+  for (let i = 0; i < 5; i++) potatoes.add(box(.42, .34, .5, 0xb8894e, -1.5 + i * .7, .17, 1));
+  potatoes.position.set(-.5, 0, 3.4);
+  const choc = group(box(1.3, 1.6, 1.3, 0xf3ecdc, 0, .8, 0), box(1.05, .12, 1.05, 0x5a3220, 0, 1.58, 0), box(.25, .8, .5, 0xf3ecdc, .8, .9, 0), box(.1, .1, .1, 0xffffff, 0, 2, 0));
+  choc.position.set(3.4, 0, 1.2);
+  tomatoes.position.set(0, 0, -.6);
+  modern.add(tomatoes, potatoes, choc);
+  const steam = new Particles(30, { size: .35 }); W.root.add(steam.mesh);
+  // dig pits where the finds come out of the ground
+  const pits = [];
+  for (const [x, z] of [[20, Math.floor(rz(20) - 4.6)], [19, 22], [15, Math.floor(rz(15) - 4.4)]]) {
+    const p = group(box(2.4, .12, 2.4, 0x5a3a24, 0, .02, 0), box(2.6, .3, .25, 0x8a6a46, 0, .15, 1.2), box(2.6, .3, .25, 0x8a6a46, 0, .15, -1.2), box(.25, .3, 2.6, 0x8a6a46, 1.2, .15, 0), box(.25, .3, 2.6, 0x8a6a46, -1.2, .15, 0), box(.12, 1.4, .12, 0xd8cdb4, 1.3, .7, 1.3), box(.12, 1.4, .12, 0xd8cdb4, -1.3, .7, -1.3));
+    p.position.copy(L.at(x, z)); W.root.add(p); pits.push(p);
+  }
+  // the find rising out of each pit: an olive oil jar, a loaf of bread, a pile of oyster shells
+  [amphora(0xc8703f), group(box(1, .45, .7, 0xc98a4a, 0, .22, 0), box(.8, .2, .5, 0xe0a860, 0, .5, 0)), group(...[0, 1, 2, 3, 4].map(i => box(.42, .12, .32, i % 2 ? 0xbdb8ae : 0xe8e4dc, (i % 3 - 1) * .35, .06 + Math.floor(i / 3) * .13, (i % 2 - .5) * .3)))].forEach((f, i) => { pits[i].add(f); pits[i].userData.find = f; });
+  // big floating marks over each claim: a tick, a cross or a question mark
+  const MARKC = { good: ['#1fb45f', '✓'], bad: ['#ff4d4d', '✗'], unknown: ['#f0a030', '?'] };
+  const markTex = {};
+  const markOf = v => {
+    if (!markTex[v]) { const c = document.createElement('canvas'); c.width = c.height = 128; const x = c.getContext('2d'); x.fillStyle = '#fff'; x.beginPath(); x.arc(64, 64, 60, 0, 7); x.fill(); x.fillStyle = MARKC[v][0]; x.beginPath(); x.arc(64, 64, 50, 0, 7); x.fill(); x.fillStyle = '#fff'; x.font = '900 70px system-ui, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(MARKC[v][1], 64, 68); markTex[v] = new THREE.CanvasTexture(c); markTex[v].colorSpace = THREE.SRGBColorSpace; }
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: markTex[v], depthTest: false, transparent: true })); sp.renderOrder = 10; return sp;
+  };
+  const marks = [];
+  W.mark = (anchor, verdict) => { const sp = markOf(verdict); sp.position.copy(W.anchors[anchor]).add(new THREE.Vector3(marks.filter(m => m.anchor === anchor).length * 3, 3.4, 0)); sp.scale.setScalar(.01); W.root.add(sp); marks.push({ sp, anchor, born: -1 }); };
+  W.clearMarks = () => { marks.forEach(m => W.root.remove(m.sp)); marks.length = 0; };
+  const chocTop = new THREE.Vector3();
+  function extras(t, dt) {
+    pop(banquet, S.feast > .02 ? Math.min(1, S.feast * 1.2) * 1.5 : 0);
+    banquet.children.forEach((c, i) => { if (c.userData && c.userData.par) c.userData.par.rotation.x = -.6 + Math.sin(t * 4 + i) * .4; });
+    pop(modern, S.modern * 1.8); tomatoes.position.y = Math.sin(t * 2) * .05;
+    pits.forEach((p, i) => { const k = clamp(S.pins * 1.6 - i * .2); pop(p, k * 1.5); const f = p.userData.find; f.position.y = .4 + k * (1.6 + Math.sin(t * 2 + i) * .15); f.rotation.y = t * .8 + i; });
+    if (S.modern > .5 && Math.random() < .4) { choc.getWorldPosition(chocTop); steam.spawn({ x: chocTop.x, y: chocTop.y + 1.8, z: chocTop.z, vx: (Math.random() - .5) * .2, vy: .9, vz: 0, drag: .3, life: 1.6, grow: 2, color: 0xffffff, size: .3 }); }
+    steam.update(dt);
+    marks.forEach(m => { if (m.born < 0) m.born = t; const k = clamp((t - m.born) * 4); m.sp.scale.setScalar(2.8 * (k < 1 ? 1.25 - .25 * k : 1) * k + .001); m.sp.position.y += Math.sin(t * 3) * .004; });
+  }
+  W.anchors = { feast: L.at(40, 19, 3.2), temple: L.at(27, 8, 12), amphorae: pins[0].userData.base, bakery: pins[1].userData.base, oysters: pins[2].userData.base, ship: L.at(35, 31, 5), wharf: L.at(20, 26, 1), tomatoes: L.at(38, 20, 2.6), potatoes: L.at(37, 24, 2.4), chocolate: L.at(41, 22, 3) };
   return W;
 }
 

@@ -227,28 +227,28 @@
 
     <div class="ws reveal" data-worlds>
       <div class="ws-tabs" role="tablist" aria-label="Example partners">
-        <button type="button" role="tab" id="ws-t-stem" aria-selected="true" aria-controls="ws-panel" data-key="stem" style="--c:#5b4cf0"><span class="bt-ico"><svg aria-hidden="true"><use href="#g-gear"/></svg></span><span><b>STEM provider</b><small>AI Inventor Lab</small></span></button>
-        <button type="button" role="tab" id="ws-t-camp" aria-selected="false" aria-controls="ws-panel" data-key="camp" tabindex="-1" style="--c:#ff6a2b"><span class="bt-ico"><svg aria-hidden="true"><use href="#g-compass"/></svg></span><span><b>Activity centre</b><small>Mission AI</small></span></button>
-        <button type="button" role="tab" id="ws-t-museum" aria-selected="false" aria-controls="ws-panel" data-key="museum" tabindex="-1" style="--c:#b6392a"><span class="bt-ico"><svg aria-hidden="true"><use href="#g-column"/></svg></span><span><b>Museum<span class="ws-long"> or visitor centre</span></b><small>AI Time Traveller</small></span></button>
-        <button type="button" role="tab" id="ws-t-club" aria-selected="false" aria-controls="ws-panel" data-key="club" data-frame="/play/?trailer=platform" tabindex="-1" style="--c:#e0457b"><span class="bt-ico"><svg aria-hidden="true"><use href="#g-pad"/></svg></span><span><b>Club<span class="ws-long"> or camp</span></b><small>Game Lab</small></span></button>
+        <button type="button" role="tab" id="ws-t-camp" aria-selected="true" aria-controls="ws-panel" data-key="camp" style="--c:#ff6a2b"><span class="bt-ico"><svg aria-hidden="true"><use href="#g-compass"/></svg></span><span><b>Activity centre</b><small>Mission AI</small></span></button>
+        <button type="button" role="tab" id="ws-t-stem" aria-selected="false" aria-controls="ws-panel" data-key="stem" tabindex="-1" style="--c:#5b4cf0"><span class="bt-ico"><svg aria-hidden="true"><use href="#g-gear"/></svg></span><span><b>STEM provider</b><small>AI Inventor Lab</small></span></button>
+        <button type="button" role="tab" id="ws-t-museum" aria-selected="false" aria-controls="ws-panel" data-key="museum" data-frame="/play/?trailer=port" data-title="Roman Port: an AI helper's version of the past, checked against evidence" data-cap="The Roman Port mission, showing builds chosen at random." tabindex="-1" style="--c:#b6392a"><span class="bt-ico"><svg aria-hidden="true"><use href="#g-column"/></svg></span><span><b>Museum<span class="ws-long"> or visitor centre</span></b><small>AI Time Traveller</small></span></button>
+        <button type="button" role="tab" id="ws-t-club" aria-selected="false" aria-controls="ws-panel" data-key="club" data-frame="/play/?trailer=platform" data-title="Game Lab: an AI playtester replays a platform game" data-cap="The Platform Game mission, showing builds chosen at random." tabindex="-1" style="--c:#e0457b"><span class="bt-ico"><svg aria-hidden="true"><use href="#g-pad"/></svg></span><span><b>Club<span class="ws-long"> or camp</span></b><small>Game Lab</small></span></button>
       </div>
       <div class="ws-panel" id="ws-panel" role="tabpanel" aria-labelledby="ws-t-stem">
         <div class="ws-stage">
-          <div class="gw ws-gw" data-brand="stem" data-player="stem camp museum" style="--poster:url(/img/game/world-mars.webp)">
+          <div class="gw ws-gw" data-brand="camp" data-player="camp stem" style="--poster:url(/img/game/world-island.webp)">
             <canvas aria-hidden="true"></canvas>
             <div class="gw-load" aria-hidden="true"><span></span></div>
           </div>
           <div class="ws-frame" hidden><iframe title="Game Lab: an AI playtester replays a platform game" tabindex="-1"></iframe></div>
           <p class="gw-cap"><button class="gw-pause" type="button" aria-pressed="false" data-pause><svg aria-hidden="true"><use href="#i-pause"/></svg><span class="sr">Pause the lab preview</span></button><span>Running on our lab engine.</span></p>
         </div>
-        <div class="ws-copy on" data-copy="stem">
+        <div class="ws-copy" data-copy="stem">
           <span class="cap">For a STEM provider</span>
           <h3>AI Inventor Lab</h3>
           <p>Children program a rover, improve their instructions, test it on sand and compare what its camera reports with what they can see.</p>
           <a class="more" href="/play/?m=rover" target="_blank" rel="noopener">Play the Mars Rover mission</a>
           <dl class="ws-facts"><div><dt>Runs as</dt><dd>A licensed module for clubs and classrooms</dd></div><div><dt>Children make</dt><dd>A rover specification</dd></div></dl>
         </div>
-        <div class="ws-copy" data-copy="camp">
+        <div class="ws-copy on" data-copy="camp">
           <span class="cap">For an activity centre</span>
           <h3>Mission AI</h3>
           <p>Teams choose a route before sunset, see what the helper assumed, then rethink the plan and decide what to do next.</p>
@@ -286,7 +286,7 @@
     <div class="cl-grid">
       <div class="cl-live reveal">
         <div class="cl-win" data-club-live>
-          <iframe title="AI Lab Club missions playing on a loop" data-src="/play/?trailer=all" loading="lazy" tabindex="-1"></iframe>
+          <iframe title="AI Lab Club missions playing on a loop" data-src="/play/?trailer=pond,coaster,rover,tower,port,bughotel,bridge,rocket,maze,expedition,aqueduct,platform" loading="lazy" tabindex="-1"></iframe>
           <span class="gw-fic">Live: random builds</span>
         </div>
         <div class="cl-actions">
@@ -342,9 +342,9 @@
       <ul class="cl-strip">
         <!-- posts:start (written by ai-lab-club/tools/site-posts.mjs from real exports) -->
         <li><img src="img/clubs/post-1-540.webp" srcset="img/clubs/post-1-540.webp 540w, img/clubs/post-1.webp 1080w" sizes="(max-width: 760px) 46vw, 24vw" alt="Coaster Lab post: The Roaring Serpent of Windmere" width="540" height="675" loading="lazy" decoding="async"></li>
-        <li><img src="img/clubs/post-2-540.webp" srcset="img/clubs/post-2-540.webp 540w, img/clubs/post-2.webp 1080w" sizes="(max-width: 760px) 46vw, 24vw" alt="Sky Tower post: Glassford, the Bright Pillar" width="540" height="675" loading="lazy" decoding="async"></li>
-        <li><img src="img/clubs/post-3-540.webp" srcset="img/clubs/post-3-540.webp 540w, img/clubs/post-3.webp 1080w" sizes="(max-width: 760px) 46vw, 24vw" alt="Wildlife Pond post: Tadpole Corner, the Sleepy Backwater" width="540" height="675" loading="lazy" decoding="async"></li>
-        <li><img src="img/clubs/post-4-540.webp" srcset="img/clubs/post-4-540.webp 540w, img/clubs/post-4.webp 1080w" sizes="(max-width: 760px) 46vw, 24vw" alt="Sky Tower post: The Super Watchtower of Oakhurst" width="540" height="675" loading="lazy" decoding="async"></li>
+        <li><img src="img/clubs/post-2-540.webp" srcset="img/clubs/post-2-540.webp 540w, img/clubs/post-2.webp 1080w" sizes="(max-width: 760px) 46vw, 24vw" alt="Bug Hotel post: Puddleby, the Spotty Lodge" width="540" height="675" loading="lazy" decoding="async"></li>
+        <li><img src="img/clubs/post-3-540.webp" srcset="img/clubs/post-3-540.webp 540w, img/clubs/post-3.webp 1080w" sizes="(max-width: 760px) 46vw, 24vw" alt="Wildlife Pond post: The Quiet Creek of Heronsgate" width="540" height="675" loading="lazy" decoding="async"></li>
+        <li><img src="img/clubs/post-4-540.webp" srcset="img/clubs/post-4-540.webp 540w, img/clubs/post-4.webp 1080w" sizes="(max-width: 760px) 46vw, 24vw" alt="Sky Tower post: The Gentle Obelisk of Glassford" width="540" height="675" loading="lazy" decoding="async"></li>
         <!-- posts:end -->
       </ul>
     </div>
@@ -374,9 +374,10 @@
 <!-- 6 · How we work -->
 <section class="band sun" id="how-we-work">
   <div class="wrap">
-    <div class="head centre">
+    <div class="head centre hw-head">
       <p class="eyebrow reveal">How we work</p>
       <h2 class="reveal">We build it with you, try it with one group, then <span class="soft">decide together what comes next.</span></h2>
+      <img class="hw-obj reveal" src="img/obj/trophy.webp" alt="" width="320" height="320" loading="lazy">
     </div>
     <ol class="ccs" data-stagger>
       <li class="reveal"><span class="ccs-n">1</span><h3>Design together</h3><p>We plan one experience around your group, setting and learning goals.</p></li>
@@ -450,6 +451,7 @@
       <a class="btn light" href="/contact/">Talk to us about a pilot <svg class="arr" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       <a class="btn ghost light" href="#demo">Try the Roman Port lab</a>
     </div>
+    <img class="close-pic reveal" src="img/close-island-540.webp" srcset="img/close-island-540.webp 540w, img/close-island.webp 1080w" sizes="(max-width: 900px) 0px, 30vw" alt="An island built in the Island Expedition lab, with a trail up to the highest point" width="540" height="675" loading="lazy" decoding="async">
   </div>
 </section>
 

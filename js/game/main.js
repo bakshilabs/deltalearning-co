@@ -21,7 +21,7 @@ function player(el, { tabs = [], onShow = null, ambient = false } = {}) {
     tabs.forEach(t => { const on = t.dataset.key === key; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
     if (onShow) onShow(key);
   };
-  const view = new View(el, { maxDpr: 2, onUpdate: t => step(t) });
+  const view = new View(el, { maxDpr: 3, onUpdate: t => step(t) });
   if (!view.ok) {
     // no WebGL: show a still of each game instead
     el.classList.add('nogl'); if (pauseBtn) pauseBtn.hidden = true;
@@ -135,7 +135,7 @@ if (worldsEl) {
     copies.forEach(c => c.classList.toggle('on', c.dataset.copy === key));
     panel.setAttribute('aria-labelledby', 'ws-t-' + key);
   };
-  // the Game Lab tab plays the real Platform Game from the club app, in a frame
+  // the Museum and Game Lab tabs play a real mission from the club app, in a frame
   const capText = worldsEl.querySelector('.gw-cap > span');
   const capPause = worldsEl.querySelector('.gw-cap [data-pause]');
   const capWas = capText ? capText.textContent : '';
@@ -150,7 +150,7 @@ if (worldsEl) {
     if (!frameBox || frameBox.hidden) return;
     e.stopImmediatePropagation();
     frameHeld = !frameHeld;
-    setIcon(frameHeld, 'the Game Lab preview');
+    setIcon(frameHeld, 'the lab preview');
     if (frame.contentWindow) frame.contentWindow.postMessage(frameHeld ? 'pause' : 'play', location.origin);
   }, true);
   const hideFrame = () => {
@@ -165,11 +165,11 @@ if (worldsEl) {
     if (!t.dataset.frame) { hideFrame(); return; }
     tabs.forEach(b => { const on = b === t; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
     showCopy(t.dataset.key);
-    if (!frame.getAttribute('src')) frame.src = t.dataset.frame;
+    if (frame.getAttribute('src') !== t.dataset.frame) { frame.src = t.dataset.frame; frame.title = t.dataset.title || frame.title; }
     else if (frame.contentWindow) frame.contentWindow.postMessage('play', location.origin);
     frameBox.hidden = false; gw.hidden = true;
-    if (capText) capText.textContent = 'The Platform Game mission, showing builds chosen at random.';
-    if (capPause && !viewIcon) { viewIcon = { held: capPause.getAttribute('aria-pressed') === 'true' }; frameHeld = false; setIcon(false, 'the Game Lab preview'); }
+    if (capText) capText.textContent = t.dataset.cap || capWas;
+    if (capPause && !viewIcon) { viewIcon = { held: capPause.getAttribute('aria-pressed') === 'true' }; frameHeld = false; setIcon(false, 'the lab preview'); }
     if (ctl) ctl.pause(true);
   }));
   const start = () => { ctl = player(gw, { tabs, onShow: showCopy }); };
@@ -217,7 +217,7 @@ function demo() {
   const found = $('[data-clock]'), status = $('[data-status]'), list = $('[data-claims]');
   const gameEl = $('[data-demo-game]'), chartEmpty = $('[data-chart-empty]');
   const world = WORLDS.rome();
-  const view = new View(gameEl, { maxDpr: 2 });
+  const view = new View(gameEl, { maxDpr: 3 });
   if (view.ok) { view.setWorld(world); gameEl.classList.add('ready'); } else gameEl.classList.add('nogl');
   const CAM = { feast: { target: world.anchors.feast, dist: 46, el: .78, az: .5, oy: .02 }, wharf: { target: world.anchors.wharf, dist: 48, el: .74, az: .62, oy: .02 }, tomatoes: { target: world.anchors.tomatoes, dist: 44, el: .78, az: .55, oy: .02 } };
   const look = a => ({ target: world.anchors[a], dist: 34, el: .74, az: .58, oy: .04 });

@@ -474,7 +474,7 @@ class Hub {
   constructor() {
     this.views = new Set();
     this.reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    this.quality = 1;
+    this.quality = 1; this.calm = 0;
     this.loop = this.loop.bind(this);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) this.wake(); });
   }
@@ -515,7 +515,9 @@ class Hub {
     if (any) {
       const ft = performance.now() - t0;
       this.avg = (this.avg || ft) * .95 + ft * .05;
-      if (this.avg > 22 && this.quality > .6) { this.quality -= .1; this.avg = 14; this.views.forEach(v => v.resize()); }
+      // a slow device gives up a little sharpness, never much; a fast one wins it back
+      if (this.avg > 22 && this.quality > .8) { this.quality = Math.max(.8, this.quality - .05); this.avg = 14; this.views.forEach(v => v.resize()); }
+      else if (this.avg < 9 && this.quality < 1 && ++this.calm > 240) { this.quality = Math.min(1, this.quality + .05); this.calm = 0; this.views.forEach(v => v.resize()); }
     }
     if (any) this.raf = requestAnimationFrame(this.loop);
   }
@@ -556,7 +558,8 @@ export class View {
   }
   resize() {
     const r = this.el.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, this.maxDpr) * hub.quality;
+    // as sharp as the screen, up to 3x, but never more than about 2600 pixels across
+    const dpr = Math.min(window.devicePixelRatio || 1, this.maxDpr, 2600 / Math.max(1, r.width)) * hub.quality;
     const w = Math.max(2, Math.round(r.width * dpr)), h = Math.max(2, Math.round(r.height * dpr));
     if (w !== this.canvas.width || h !== this.canvas.height) { this.canvas.width = w; this.canvas.height = h; this.dirty = true; }
     // layout size in the element's own CSS pixels, so labels line up even when the page is zoomed on big screens

@@ -607,6 +607,7 @@ h1 .hl { position:relative; -webkit-box-decoration-break:clone; box-decoration-b
 .claims li b { font:750 14px/1.25 var(--sans); }
 .claims li small { font-size:12.5px; color:#9fb3d9; }
 .claims li.shown { opacity:1; }
+.claims li.wait { opacity:.42; } .claims li.wait b { font-weight:650; }
 .claims li.good span { background:#1fb45f; color:#fff; } .claims li.bad span { background:#ff5d5d; color:#fff; } .claims li.unknown span { background:#f0a030; color:#10202b; }
 .claims li.bad b { text-decoration:line-through; text-decoration-color:rgba(255,93,93,.8); }
 .legend .k-good { background:#1fb45f; } .legend .k-bad { background:#ff5d5d; } .legend .k-unknown { background:#f0a030; }

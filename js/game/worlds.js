@@ -428,7 +428,7 @@ function marsWorld() {
   const W = new World({
     sky: [[0, 0x7fc0f0], [.55, 0xcfe3f2], [.85, 0xf6dcc8], [1, 0xffe8d4]], fog: [0xf7e2d2, 170, 300],
     hemi: [0xeef2ff, 0x7a3a22, 1.3], sun: [0xfff2e0, 3.9], sunDir: [-.5, .85, .8], shadow: 34,
-    center: [0, -1.5, 0], cam: { az: .6, el: .6, dist: 110, fov: 24 }
+    center: [0, -1.5, 0], cam: { az: .6, el: .6, dist: 128, fov: 24 }
   });
   const CR = { x: 45, z: 18.5, r: 6.4 }, SAND = { x: 27, z: 20, r: 3.8 };
   const STRATA = [0x9c4428, 0xd0794a, 0x7e3320, 0xe2a06a, 0xb25234, 0x6a2e1e, 0xc86a3e];

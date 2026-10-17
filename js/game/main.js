@@ -219,7 +219,7 @@ function demo() {
   const world = WORLDS.rome();
   const view = new View(gameEl, { maxDpr: 3 });
   if (view.ok) { view.setWorld(world); gameEl.classList.add('ready'); } else gameEl.classList.add('nogl');
-  waiting();
+  waiting(); if (chartEmpty) chartEmpty.hidden = true;
   const CAM = { feast: { target: world.anchors.feast, dist: 46, el: .78, az: .5, oy: .02 }, wharf: { target: world.anchors.wharf, dist: 48, el: .74, az: .62, oy: .02 }, tomatoes: { target: world.anchors.tomatoes, dist: 44, el: .78, az: .55, oy: .02 } };
   const look = a => ({ target: world.anchors[a], dist: 34, el: .74, az: .58, oy: .04 });
   let tried = [], cur = -1, timers = [];
@@ -250,7 +250,7 @@ function demo() {
     list.innerHTML = '';
     ['What the traveller ate', 'Where the food came from', 'Who cooked it', 'What it cost'].forEach(text => {
       const li = document.createElement('li'); li.className = 'wait';
-      li.innerHTML = '<span>?</span><b></b><small>Waiting for the AI</small>';
+      li.innerHTML = '<span>?</span><b></b><small>Pick a card to start</small>';
       li.children[1].textContent = text; list.appendChild(li);
     });
   }
@@ -333,7 +333,7 @@ function demo() {
     tried = []; cur = -1;
     outc.hidden = true; pathBox.hidden = true; res.hidden = true; status.hidden = true;
     cards.forEach(c => { c.setAttribute('aria-pressed', 'false'); c.classList.remove('tried'); });
-    waiting(); if (chartEmpty) chartEmpty.hidden = false; setFound(0);
+    waiting(); setFound(0);
     world.clearMarks(); world.setState('start'); world.camOverride = null; view.refresh(20);
     $('[data-pick]').textContent = 'Pick a card to tell the AI helper what to find out.';
     setFlow('mission');
